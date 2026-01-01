@@ -1,7 +1,7 @@
 
 # Getting Started
 
-Hello!!
+Hello!
 This is  a **PWA**(I hope this is) that powers my personal blog where i share things I learn, break and eventually understand.
 The content lives as Markdown files in my local vault.
 You can replace those files with your own and instantly turn this into your blog.

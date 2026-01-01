@@ -109,14 +109,20 @@ export default function NoteModal({ note, isOpen, onClose, mode = "view", onCrea
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-[rgba(15,15,15,0.1)] backdrop-blur-[2px] z-[9998]"
+      className="fixed inset-0 flex items-center justify-center backdrop-blur-[2px] z-[9998]"
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
       onClick={onClose}
     >
       <div
-        className="relative max-w-4xl w-full mx-4 max-h-[90vh] overflow-hidden bg-white rounded-lg shadow-[0_4px_32px_rgba(15,15,15,0.1)] border border-[#e9e9e7] z-[9999]"
+        className="relative max-w-4xl w-full mx-4 max-h-[90vh] overflow-hidden rounded-lg z-[9999]"
+        style={{
+          backgroundColor: 'var(--surface)',
+          boxShadow: '0 4px 32px rgba(0, 0, 0, 0.4)',
+          border: '1px solid var(--border)'
+        }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-[#e9e9e7] p-6">
+        <div className="flex items-center justify-between border-b p-6" style={{ borderColor: 'var(--border)' }}>
           <div className="flex-1">
             {isCreateMode ? (
               <input
@@ -124,7 +130,8 @@ export default function NoteModal({ note, isOpen, onClose, mode = "view", onCrea
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Enter note title..."
-                className="text-2xl font-bold text-[#37352f] bg-transparent border-none outline-none w-full"
+                className="text-2xl font-bold bg-transparent border-none outline-none w-full"
+                style={{ color: 'var(--text)' }}
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
@@ -134,7 +141,7 @@ export default function NoteModal({ note, isOpen, onClose, mode = "view", onCrea
                 }}
               />
             ) : (
-              <h1 className="text-2xl font-bold text-[#37352f]">
+              <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
                 {note?.frontmatter.title || note?.slug}
               </h1>
             )}
@@ -151,7 +158,10 @@ export default function NoteModal({ note, isOpen, onClose, mode = "view", onCrea
             <Button
               variant="icon"
               onClick={onClose}
-              className="p-1.5 rounded hover:bg-gray-100 text-[#37352f]"
+              className="p-1.5 rounded transition-colors"
+              style={{ color: 'var(--text)' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--surface-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               aria-label="Close modal"
             >
               <svg
@@ -160,7 +170,6 @@ export default function NoteModal({ note, isOpen, onClose, mode = "view", onCrea
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-                className="text-[#37352f]"
               >
                 <path
                   strokeLinecap="round"
@@ -177,24 +186,24 @@ export default function NoteModal({ note, isOpen, onClose, mode = "view", onCrea
           style={{ maxHeight: "calc(90vh - 140px)" }}
         >
           {isCreateMode ? (
-            <div className="text-[#37352f] text-base leading-[1.5] font-sans">
-              <div className="mb-4 p-4 bg-[#f7f6f3] rounded-lg border border-[#e9e9e7]">
-                <h3 className="text-lg font-semibold mb-2 text-[#37352f]">Note Template Preview</h3>
-                <div className="text-sm text-[#787774] space-y-1">
+            <div className="text-base leading-[1.5] font-sans" style={{ color: 'var(--text)' }}>
+              <div className="mb-4 p-4 rounded-lg border" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border)' }}>
+                <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--text)' }}>Note Template Preview</h3>
+                <div className="text-sm space-y-1" style={{ color: 'var(--text-secondary)' }}>
                   <p><strong>Title:</strong> {title || "Your note title"}</p>
                   <p><strong>Created Date:</strong> {dayjs().format("MMMM D, YYYY")}</p>
-                  <p className="mt-2 text-[#37352f]">Content editing will be available in a future update.</p>
+                  <p className="mt-2" style={{ color: 'var(--text)' }}>Content editing will be available in a future update.</p>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="notion-content text-[#37352f] text-base leading-[1.5] font-sans min-h-[200px] text-left">
+            <div className="notion-content text-base leading-[1.5] font-sans min-h-[200px] text-left" style={{ color: 'var(--text)' }}>
               <CollapsibleMarkdown content={note?.content || ""} />
             </div>
           )}
         </div>
-        <div className="flex items-center justify-between border-t border-[#e9e9e7] px-6 py-4 bg-[#f7f6f3]">
-          <div className="text-sm text-[#787774]">
+        <div className="flex items-center justify-between border-t px-6 py-4" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-secondary)' }}>
+          <div className="text-sm" style={{ color: 'var(--text-secondary)' }}>
             {isCreateMode ? (
               <span>Press Enter to create, Escape to cancel</span>
             ) : (

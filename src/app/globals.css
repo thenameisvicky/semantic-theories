@@ -1,17 +1,42 @@
 @import "tailwindcss";
 
 :root {
-  --notion-bg: #ffffff;
-  --notion-bg-secondary: #f7f6f3;
-  --notion-text: #37352f;
-  --notion-text-secondary: #787774;
-  --notion-text-tertiary: #9b9a97;
-  --notion-border: #e9e9e7;
-  --notion-border-hover: #d9d9d7;
-  --notion-accent: #2383e2;
-  --notion-accent-hover: #1a73d1;
-  --notion-shadow: rgba(15, 15, 15, 0.1);
-  --notion-shadow-hover: rgba(15, 15, 15, 0.2);
+  /* GitHub Dark Theme Colors */
+  --bg: #0d1117;
+  --bg-secondary: #161b22;
+  --surface: #21262d;
+  --surface-hover: #2d333b;
+  --text: #c9d1d9;
+  --text-secondary: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --border: #30363d;
+  --border-hover: #484f58;
+  --code-bg: #161b22;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-hover: rgba(0, 0, 0, 0.4);
+  
+  /* Syntax colors (for code blocks) */
+  --syntax-orange: #ffa657;
+  --syntax-green: #7ee787;
+  --syntax-purple: #d2a8ff;
+  
+  /* Error/Warning colors */
+  --error: #ff7b72;
+  --warning: #ffa657;
+  
+  /* Legacy variable names for compatibility */
+  --notion-bg: var(--bg);
+  --notion-bg-secondary: var(--bg-secondary);
+  --notion-text: var(--text);
+  --notion-text-secondary: var(--text-secondary);
+  --notion-text-tertiary: var(--text-secondary);
+  --notion-border: var(--border);
+  --notion-border-hover: var(--border-hover);
+  --notion-accent: var(--accent);
+  --notion-accent-hover: var(--accent-hover);
+  --notion-shadow: var(--shadow);
+  --notion-shadow-hover: var(--shadow-hover);
   
   --notion-font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
   --notion-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
@@ -30,23 +55,9 @@
   --notion-radius-lg: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --notion-bg: #191919;
-    --notion-bg-secondary: #2f3437;
-    --notion-text: #ffffff;
-    --notion-text-secondary: #9b9a97;
-    --notion-text-tertiary: #6f6e69;
-    --notion-border: #373737;
-    --notion-border-hover: #4a4a4a;
-    --notion-accent: #2383e2;
-    --notion-accent-hover: #1a73d1;
-  }
-}
-
 body {
-  background: var(--notion-bg);
-  color: var(--notion-text);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--notion-font-family);
   font-size: 14px;
   line-height: 1.5;
@@ -55,7 +66,7 @@ body {
 }
 
 .notion-content {
-  color: #37352f !important;
+  color: var(--text) !important;
   font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif;
   font-size: 16px;
   line-height: 1.5;
@@ -67,7 +78,7 @@ body {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 4px;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content h2 {
@@ -75,7 +86,7 @@ body {
   font-weight: 600;
   line-height: 1.3;
   margin-bottom: 1px;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content h3 {
@@ -83,7 +94,7 @@ body {
   font-weight: 600;
   line-height: 1.3;
   margin-bottom: 1px;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content h4 {
@@ -91,23 +102,23 @@ body {
   font-weight: 600;
   line-height: 1.3;
   margin-bottom: 1px;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content p {
   margin-top: 1px;
   margin-bottom: 1px;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content strong {
   font-weight: 600;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content em {
   font-style: italic;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content ul,
@@ -120,7 +131,7 @@ body {
 .notion-content li {
   margin-top: 1px;
   margin-bottom: 1px;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content ul li {
@@ -140,35 +151,36 @@ body {
 
 .notion-content th,
 .notion-content td {
-  border: 1px solid #e9e9e7;
+  border: 1px solid var(--border);
   padding: 8px 12px;
   text-align: left;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content th {
-  background-color: #f7f6f3;
+  background-color: var(--bg-secondary);
   font-weight: 600;
 }
 
 .notion-content code {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 85%;
-  background-color: #f7f6f3;
+  background-color: var(--code-bg);
   padding: 2px 4px;
   border-radius: 3px;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content pre {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 14px;
-  background-color: #f7f6f3;
+  background-color: var(--code-bg);
   padding: 12px;
   border-radius: 6px;
   overflow-x: auto;
   margin-top: 1px;
   margin-bottom: 1px;
+  border: 1px solid var(--border);
 }
 
 .notion-content pre code {
@@ -177,7 +189,7 @@ body {
 }
 
 .notion-content * {
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content h1,
@@ -186,22 +198,22 @@ body {
 .notion-content h4,
 .notion-content h5,
 .notion-content h6 {
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content p,
 .notion-content div,
 .notion-content span {
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .notion-content a {
-  color: #2383e2 !important;
+  color: var(--accent) !important;
   text-decoration: underline;
 }
 
 .notion-content a:hover {
-  color: #1a73d1 !important;
+  color: var(--accent-hover) !important;
 }
 
 .collapsible-markdown {
@@ -225,7 +237,7 @@ body {
 }
 
 .collapsible-heading-wrapper:hover {
-  background-color: rgba(55, 53, 47, 0.03);
+  background-color: var(--surface-hover);
   border-radius: 3px;
 }
 
@@ -257,7 +269,7 @@ body {
 .collapsible-content .markdown-content-block p {
   margin-top: 1px;
   margin-bottom: 1px;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .collapsible-content .markdown-content-block ul,
@@ -270,27 +282,28 @@ body {
 .collapsible-content .markdown-content-block li {
   margin-top: 1px;
   margin-bottom: 1px;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .collapsible-content .markdown-content-block code {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 85%;
-  background-color: #f7f6f3;
+  background-color: var(--code-bg);
   padding: 2px 4px;
   border-radius: 3px;
-  color: #37352f !important;
+  color: var(--text) !important;
 }
 
 .collapsible-content .markdown-content-block pre {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 14px;
-  background-color: #f7f6f3;
+  background-color: var(--code-bg);
   padding: 12px;
   border-radius: 6px;
   overflow-x: auto;
   margin-top: 1px;
   margin-bottom: 1px;
+  border: 1px solid var(--border);
 }
 
 .collapsible-content .markdown-content-block pre code {
@@ -305,7 +318,7 @@ body {
   font-size: 16px;
   line-height: 1.5;
   word-wrap: break-word;
-  color: #24292f;
+  color: var(--text);
   text-align: left;
   width: 100%;
   max-width: 100%;
@@ -318,8 +331,8 @@ body {
   margin-top: 24px;
   margin-bottom: 16px;
   padding-bottom: 0.3em;
-  border-bottom: 1px solid #d0d7de;
-  color: #24292f;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
   text-align: left;
 }
 
@@ -330,8 +343,8 @@ body {
   margin-top: 24px;
   margin-bottom: 16px;
   padding-bottom: 0.3em;
-  border-bottom: 1px solid #d0d7de;
-  color: #24292f;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
   text-align: left;
 }
 
@@ -341,7 +354,7 @@ body {
   font-weight: 600;
   margin-top: 24px;
   margin-bottom: 16px;
-  color: #24292f;
+  color: var(--text);
   text-align: left;
 }
 
@@ -351,7 +364,7 @@ body {
   font-weight: 600;
   margin-top: 24px;
   margin-bottom: 16px;
-  color: #24292f;
+  color: var(--text);
   text-align: left;
 }
 
@@ -359,7 +372,7 @@ body {
 .collapsible-content .markdown-content-block p {
   margin-top: 0;
   margin-bottom: 10px;
-  color: #24292f;
+  color: var(--text);
   text-align: left;
 }
 
@@ -377,7 +390,7 @@ body {
 .collapsible-content .markdown-content-block li {
   margin-top: 0.25em;
   margin-bottom: 0.25em;
-  color: #24292f;
+  color: var(--text);
   text-align: left;
 }
 
@@ -385,10 +398,10 @@ body {
 .collapsible-content .markdown-content-block code {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   font-size: 85%;
-  background-color: rgba(175, 184, 193, 0.2);
+  background-color: var(--code-bg);
   padding: 0.2em 0.4em;
   border-radius: 6px;
-  color: #24292f;
+  color: var(--text);
 }
 
 .markdown-content-block pre,
@@ -396,13 +409,13 @@ body {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #f6f8fa;
+  background-color: var(--code-bg);
   border-radius: 6px;
   padding: 16px;
   overflow: auto;
   margin-top: 0;
   margin-bottom: 16px;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--border);
 }
 
 .markdown-content-block pre code,
@@ -416,14 +429,14 @@ body {
   word-wrap: normal;
   background-color: transparent;
   border: 0;
-  color: #24292f;
+  color: var(--text);
 }
 
 .markdown-content-block blockquote,
 .collapsible-content .markdown-content-block blockquote {
   padding: 0 1em;
-  color: #656d76;
-  border-left: 0.25em solid #d0d7de;
+  color: var(--text-secondary);
+  border-left: 0.25em solid var(--border);
   margin: 0 0 16px 0;
 }
 
@@ -445,34 +458,35 @@ body {
 .collapsible-content .markdown-content-block table th,
 .collapsible-content .markdown-content-block table td {
   padding: 6px 13px;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--border);
 }
 
 .markdown-content-block table th,
 .collapsible-content .markdown-content-block table th {
   font-weight: 600;
-  background-color: #f6f8fa;
+  background-color: var(--bg-secondary);
 }
 
 .markdown-content-block table tr,
 .collapsible-content .markdown-content-block table tr {
-  background-color: #ffffff;
-  border-top: 1px solid #d0d7de;
+  background-color: var(--bg);
+  border-top: 1px solid var(--border);
 }
 
 .markdown-content-block table tr:nth-child(2n),
 .collapsible-content .markdown-content-block table tr:nth-child(2n) {
-  background-color: #f6f8fa;
+  background-color: var(--bg-secondary);
 }
 
 .markdown-content-block a,
 .collapsible-content .markdown-content-block a {
-  color: #0969da;
+  color: var(--accent);
   text-decoration: none;
 }
 
 .markdown-content-block a:hover,
 .collapsible-content .markdown-content-block a:hover {
+  color: var(--accent-hover);
   text-decoration: underline;
 }
 
@@ -481,7 +495,7 @@ body {
   height: 0.25em;
   padding: 0;
   margin: 24px 0;
-  background-color: #d0d7de;
+  background-color: var(--border);
   border: 0;
 }
 
@@ -489,7 +503,7 @@ body {
 .collapsible-content .markdown-content-block img {
   max-width: 100%;
   box-sizing: content-box;
-  background-color: #ffffff;
+  background-color: var(--bg);
   margin-top: 0;
   margin-bottom: 16px;
 }
@@ -497,13 +511,13 @@ body {
 .markdown-content-block strong,
 .collapsible-content .markdown-content-block strong {
   font-weight: 600;
-  color: #24292f;
+  color: var(--text);
 }
 
 .markdown-content-block em,
 .collapsible-content .markdown-content-block em {
   font-style: italic;
-  color: #24292f;
+  color: var(--text);
 }
 
 .notion-modal {
@@ -534,60 +548,60 @@ body {
   font-weight: 500;
   padding: 6px 12px;
   border-radius: var(--notion-radius-sm);
-  border: 1px solid var(--notion-border);
-  background: var(--notion-bg);
-  color: var(--notion-text);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
   cursor: pointer;
   transition: all 0.1s ease;
 }
 
 .notion-button:hover {
-  background: var(--notion-bg-secondary);
-  border-color: var(--notion-border-hover);
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
 }
 
 .notion-button-primary {
-  background: var(--notion-accent);
-  color: white;
-  border-color: var(--notion-accent);
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
 }
 
 .notion-button-primary:hover {
-  background: var(--notion-accent-hover);
-  border-color: var(--notion-accent-hover);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 .notion-input {
   font-family: var(--notion-font-family);
   font-size: 16px;
   padding: 6px 8px;
-  border: 1px solid var(--notion-border);
+  border: 1px solid var(--border);
   border-radius: var(--notion-radius-sm);
-  background: var(--notion-bg);
-  color: var(--notion-text);
+  background: var(--bg-secondary);
+  color: var(--text);
   outline: none;
   transition: border-color 0.1s ease;
 }
 
 .notion-input:focus {
-  border-color: var(--notion-accent);
+  border-color: var(--accent);
 }
 
 .notion-textarea {
   font-family: var(--notion-font-family);
   font-size: 14px;
   padding: 8px;
-  border: 1px solid var(--notion-border);
+  border: 1px solid var(--border);
   border-radius: var(--notion-radius-sm);
-  background: var(--notion-bg);
-  color: var(--notion-text);
+  background: var(--bg-secondary);
+  color: var(--text);
   outline: none;
   resize: none;
   transition: border-color 0.1s ease;
 }
 
 .notion-textarea:focus {
-  border-color: var(--notion-accent);
+  border-color: var(--accent);
 }
 
 .kural-text {
@@ -599,9 +613,10 @@ body {
   position: relative;
   padding: 4px 12px 4px 12px;
   border-radius: 4px;
-  background: linear-gradient(135deg, #fef3c7 0%, #e4be00 100%);
-  box-shadow: 0 2px 4px rgba(2, 2, 2, 0.3);
-  border: 1px solid #000000;
+  background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  color: var(--bg);
 }
 
 @keyframes kuralBump {

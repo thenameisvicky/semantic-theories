@@ -28,7 +28,7 @@ function CollapsibleSection({
 }: CollapsibleSectionProps) {
   const headingId = `heading-${node.id}`;
   const headingLevel = node.level || 1;
-  const headingClassName = `collapsible-heading m-0 flex-1 text-[#37352f] ${
+  const headingClassName = `collapsible-heading m-0 flex-1 ${
     headingLevel === 1
       ? "font-bold text-[32px] leading-[1.2]"
       : headingLevel === 2
@@ -40,6 +40,7 @@ function CollapsibleSection({
     const props = {
       id: headingId,
       className: headingClassName,
+      style: { color: 'var(--text)' } as React.CSSProperties,
       dangerouslySetInnerHTML: { __html: node.html || "" } as { __html: string },
     };
 
@@ -66,9 +67,10 @@ function CollapsibleSection({
         onClick={onToggle}
       >
         <div
-          className="collapsible-toggle w-[18px] h-[18px] flex items-center justify-center mr-1.5 -ml-6 shrink-0 text-[#787774] transition-all duration-200 ease-in-out"
+          className="collapsible-toggle w-[18px] h-[18px] flex items-center justify-center mr-1.5 -ml-6 shrink-0 transition-all duration-200 ease-in-out"
           style={{
             transform: isExpanded ? "rotate(90deg)" : "rotate(0deg)",
+            color: 'var(--text-secondary)'
           }}
         >
           <svg

@@ -183,10 +183,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen notion-bg bg-[#f7f6f3]">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg)' }}>
       <ToastContainer toasts={toasts} onRemove={removeToast} />
-      <div className="border-b bg-white border-[#e9e9e7] p-6">
-        <h1 className="text-2xl font-bold text-[#37352f]">MD Runner</h1>
+      <div className="border-b p-6" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border)' }}>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>MD Runner</h1>
         <KuralHeader />
         <div className="mt-4 flex items-center gap-4 flex-wrap">
           <Button
@@ -235,11 +235,22 @@ export default function Home() {
             <div className="flex items-center gap-2 flex-wrap">
               <button
                 onClick={() => updateSelectedFolder(null)}
-                className={`px-3 py-1.5 text-sm rounded border ${
-                  selectedFolderId === null
-                    ? "bg-[#37352f] text-white border-[#37352f]"
-                    : "bg-white text-[#37352f] border-[#e9e9e7] hover:bg-[#f7f6f3]"
-                }`}
+                className="px-3 py-1.5 text-sm rounded border transition-colors"
+                style={{
+                  backgroundColor: selectedFolderId === null ? 'var(--accent)' : 'var(--surface)',
+                  color: selectedFolderId === null ? 'var(--bg)' : 'var(--text)',
+                  borderColor: selectedFolderId === null ? 'var(--accent)' : 'var(--border)'
+                }}
+                onMouseEnter={(e) => {
+                  if (selectedFolderId !== null) {
+                    e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (selectedFolderId !== null) {
+                    e.currentTarget.style.backgroundColor = 'var(--surface)';
+                  }
+                }}
               >
                 All Notes
               </button>
@@ -247,11 +258,22 @@ export default function Home() {
                 <button
                   key={folder.id}
                   onClick={() => updateSelectedFolder(folder.id)}
-                  className={`px-3 py-1.5 text-sm rounded border ${
-                    selectedFolderId === folder.id
-                      ? "bg-[#37352f] text-white border-[#37352f]"
-                      : "bg-white text-[#37352f] border-[#e9e9e7] hover:bg-[#f7f6f3]"
-                  }`}
+                  className="px-3 py-1.5 text-sm rounded border transition-colors"
+                  style={{
+                    backgroundColor: selectedFolderId === folder.id ? 'var(--accent)' : 'var(--surface)',
+                    color: selectedFolderId === folder.id ? 'var(--bg)' : 'var(--text)',
+                    borderColor: selectedFolderId === folder.id ? 'var(--accent)' : 'var(--border)'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (selectedFolderId !== folder.id) {
+                      e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (selectedFolderId !== folder.id) {
+                      e.currentTarget.style.backgroundColor = 'var(--surface)';
+                    }
+                  }}
                 >
                   {folder.name}
                 </button>
@@ -263,7 +285,7 @@ export default function Home() {
       <div className="p-6">
         {filteredNotes.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-lg text-[#787774]">
+            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
               {selectedFolderId
                 ? "No notes in this folder."
                 : "No notes found."}
@@ -341,19 +363,28 @@ function FolderModal({
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-[rgba(15,15,15,0.1)] backdrop-blur-[2px] z-[9998]"
+      className="fixed inset-0 flex items-center justify-center backdrop-blur-[2px] z-[9998]"
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
       onClick={onClose}
     >
       <div
-        className="relative max-w-2xl w-full mx-4 max-h-[90vh] overflow-hidden bg-white rounded-lg shadow-[0_4px_32px_rgba(15,15,15,0.1)] border border-[#e9e9e7] z-[9999]"
+        className="relative max-w-2xl w-full mx-4 max-h-[90vh] overflow-hidden rounded-lg z-[9999]"
+        style={{
+          backgroundColor: 'var(--surface)',
+          boxShadow: '0 4px 32px rgba(0, 0, 0, 0.4)',
+          border: '1px solid var(--border)'
+        }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-[#e9e9e7] p-6">
-          <h2 className="text-xl font-bold text-[#37352f]">Create Folder</h2>
+        <div className="flex items-center justify-between border-b p-6" style={{ borderColor: 'var(--border)' }}>
+          <h2 className="text-xl font-bold" style={{ color: 'var(--text)' }}>Create Folder</h2>
           <Button
             variant="icon"
             onClick={onClose}
-            className="p-1.5 rounded hover:bg-gray-100 text-[#37352f]"
+            className="p-1.5 rounded transition-colors"
+            style={{ color: 'var(--text)' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--surface-hover)'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
           >
             <svg
               width="16"
@@ -376,7 +407,7 @@ function FolderModal({
           style={{ maxHeight: "calc(90vh - 200px)" }}
         >
           <div className="mb-4">
-            <label className="block text-sm font-medium text-[#37352f] mb-2">
+            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text)' }}>
               Folder Name
             </label>
             <input
@@ -384,17 +415,24 @@ function FolderModal({
               value={folderName}
               onChange={(e) => setFolderName(e.target.value)}
               placeholder="Enter folder name..."
-              className="w-full px-3 py-2 border border-[#e9e9e7] rounded-md text-[#37352f] focus:outline-none focus:ring-2 focus:ring-[#37352f]"
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-colors"
+              style={{
+                borderColor: 'var(--border)',
+                backgroundColor: 'var(--bg-secondary)',
+                color: 'var(--text)'
+              }}
+              onFocus={(e) => e.currentTarget.style.borderColor = 'var(--accent)'}
+              onBlur={(e) => e.currentTarget.style.borderColor = 'var(--border)'}
               autoFocus
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#37352f] mb-2">
+            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text)' }}>
               Select Notes to Include
             </label>
-            <div className="max-h-64 overflow-y-auto border border-[#e9e9e7] rounded-md p-2">
+            <div className="max-h-64 overflow-y-auto border rounded-md p-2" style={{ borderColor: 'var(--border)' }}>
               {notes.length === 0 ? (
-                <p className="text-sm text-[#787774] p-2">No notes available</p>
+                <p className="text-sm p-2" style={{ color: 'var(--text-secondary)' }}>No notes available</p>
               ) : (
                 notes.map((note) => {
                   // Find which folder(s) this note belongs to
@@ -406,20 +444,27 @@ function FolderModal({
                   return (
                     <label
                       key={note.slug}
-                      className="flex items-center gap-2 p-2 hover:bg-[#f7f6f3] rounded cursor-pointer"
+                      className="flex items-center gap-2 p-2 rounded cursor-pointer transition-colors"
+                      style={{ color: 'var(--text)' }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--surface-hover)'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                     >
                       <input
                         type="checkbox"
                         checked={selectedNoteIds.has(note.slug)}
                         onChange={() => handleToggleNote(note.slug)}
-                        className="w-4 h-4 text-[#37352f] border-[#e9e9e7] rounded focus:ring-[#37352f]"
+                        className="w-4 h-4 rounded focus:ring-2"
+                        style={{
+                          accentColor: 'var(--accent)',
+                          borderColor: 'var(--border)'
+                        }}
                       />
                       <div className="flex-1 flex items-center justify-between">
-                        <span className="text-sm text-[#37352f]">
+                        <span className="text-sm" style={{ color: 'var(--text)' }}>
                           {note.frontmatter.title || note.slug}
                         </span>
                         {folderNames && (
-                          <span className="text-xs text-[#787774] ml-2">
+                          <span className="text-xs ml-2" style={{ color: 'var(--text-secondary)' }}>
                             ({folderNames})
                           </span>
                         )}
@@ -431,7 +476,7 @@ function FolderModal({
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-end gap-2 border-t border-[#e9e9e7] px-6 py-4 bg-[#f7f6f3]">
+        <div className="flex items-center justify-end gap-2 border-t px-6 py-4" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-secondary)' }}>
           <Button
             variant="text"
             onClick={onClose}

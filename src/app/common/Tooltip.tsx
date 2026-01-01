@@ -83,6 +83,7 @@ export default function Tooltip({
 
   const arrowSize = 6;
 
+  const arrowColor = 'var(--surface)';
   const arrowStyles: Record<TooltipPosition, React.CSSProperties> = {
     top: {
       position: "absolute",
@@ -93,7 +94,7 @@ export default function Tooltip({
       height: 0,
       borderLeft: `${arrowSize}px solid transparent`,
       borderRight: `${arrowSize}px solid transparent`,
-      borderTop: `${arrowSize}px solid rgba(15, 15, 15, 0.9)`,
+      borderTop: `${arrowSize}px solid ${arrowColor}`,
     },
     bottom: {
       position: "absolute",
@@ -104,7 +105,7 @@ export default function Tooltip({
       height: 0,
       borderLeft: `${arrowSize}px solid transparent`,
       borderRight: `${arrowSize}px solid transparent`,
-      borderBottom: `${arrowSize}px solid rgba(15, 15, 15, 0.9)`,
+      borderBottom: `${arrowSize}px solid ${arrowColor}`,
     },
     left: {
       position: "absolute",
@@ -115,7 +116,7 @@ export default function Tooltip({
       height: 0,
       borderTop: `${arrowSize}px solid transparent`,
       borderBottom: `${arrowSize}px solid transparent`,
-      borderLeft: `${arrowSize}px solid rgba(15, 15, 15, 0.9)`,
+      borderLeft: `${arrowSize}px solid ${arrowColor}`,
     },
     right: {
       position: "absolute",
@@ -126,7 +127,7 @@ export default function Tooltip({
       height: 0,
       borderTop: `${arrowSize}px solid transparent`,
       borderBottom: `${arrowSize}px solid transparent`,
-      borderRight: `${arrowSize}px solid rgba(15, 15, 15, 0.9)`,
+      borderRight: `${arrowSize}px solid ${arrowColor}`,
     },
   };
 
@@ -140,10 +141,16 @@ export default function Tooltip({
       {children}
       {!disabled && (
         <div
-          className={`absolute bg-[rgba(15,15,15,0.9)] text-white px-2.5 py-1.5 rounded text-xs whitespace-nowrap pointer-events-none z-[9999] transition-opacity duration-200 ease-in-out ${
+          className={`absolute px-2.5 py-1.5 rounded text-xs whitespace-nowrap pointer-events-none z-[9999] transition-opacity duration-200 ease-in-out ${
             isVisible ? "opacity-100" : "opacity-0"
           }`}
-          style={tooltipStyle}
+          style={{
+            ...tooltipStyle,
+            backgroundColor: 'var(--surface)',
+            color: 'var(--text)',
+            border: '1px solid var(--border)',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+          }}
           role="tooltip"
           aria-hidden={!isVisible}
         >

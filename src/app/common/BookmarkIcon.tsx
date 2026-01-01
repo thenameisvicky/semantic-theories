@@ -17,8 +17,8 @@ export default function BookmarkIcon({
   onClick,
   "aria-label": ariaLabel,
 }: BookmarkIconProps) {
-  const fillColor = isBookmarked ? "#FFD700" : "#ffffff";
-  const strokeColor = isBookmarked ? "#c7aa05ff" : "#787774";
+  const fillColor = isBookmarked ? "#FFD700" : "transparent";
+  const strokeColor = isBookmarked ? "#c7aa05ff" : "#8b949e";
 
   const rectWidth = size * 0.5;
   const rectHeight = size * 0.8;

@@ -39,38 +39,71 @@ export default function Toast({
     };
   }, [duration, onClose]);
 
-  const typeStyles: Record<ToastType, string> = {
-    success: "bg-green-50 border-green-200 text-green-800",
-    warning: "bg-yellow-50 border-yellow-200 text-yellow-800",
-    error: "bg-red-50 border-red-200 text-red-800",
-    info: "bg-white border border-[#e9e9e7] text-[#37352f]",
+  const typeStyles: Record<ToastType, React.CSSProperties> = {
+    success: {
+      backgroundColor: 'rgba(126, 231, 135, 0.15)',
+      borderColor: 'var(--syntax-green)',
+      color: 'var(--syntax-green)',
+      border: '1px solid var(--syntax-green)'
+    },
+    warning: {
+      backgroundColor: 'rgba(255, 166, 87, 0.15)',
+      borderColor: 'var(--warning)',
+      color: 'var(--warning)',
+      border: '1px solid var(--warning)'
+    },
+    error: {
+      backgroundColor: 'rgba(255, 123, 114, 0.15)',
+      borderColor: 'var(--error)',
+      color: 'var(--error)',
+      border: '1px solid var(--error)'
+    },
+    info: {
+      backgroundColor: 'var(--surface)',
+      borderColor: 'var(--border)',
+      color: 'var(--text)',
+      border: '1px solid var(--border)'
+    },
+  };
+
+  const getTextColor = () => {
+    switch (type) {
+      case "success":
+        return 'var(--syntax-green)';
+      case "warning":
+        return 'var(--warning)';
+      case "error":
+        return 'var(--error)';
+      default:
+        return 'var(--text)';
+    }
   };
 
   return (
     <div
-      className={`px-4 py-3 rounded-lg shadow-[0_4px_12px_rgba(15,15,15,0.15)] min-w-[250px] max-w-[400px] transition-all duration-500 ease-out ${
-        typeStyles[type]
-      } ${
+      className={`px-4 py-3 rounded-lg min-w-[250px] max-w-[400px] transition-all duration-500 ease-out ${
         isVisible && !isExiting
           ? "translate-y-0 opacity-100"
           : "-translate-y-full opacity-0"
       }`}
+      style={{
+        ...typeStyles[type],
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+      }}
     >
       <div className="flex items-center gap-3">
         <div className="flex-1">
-          <p className={`text-sm font-medium ${
-            type === "success" ? "text-green-800" :
-            type === "warning" ? "text-yellow-800" :
-            type === "error" ? "text-red-800" :
-            "text-[#37352f]"
-          }`}>{message}</p>
+          <p className="text-sm font-medium" style={{ color: getTextColor() }}>{message}</p>
         </div>
         <button
           onClick={() => {
             setIsExiting(true);
             setTimeout(() => onClose(), 300);
           }}
-          className="text-[#787774] hover:text-[#37352f] transition-colors"
+          className="transition-colors"
+          style={{ color: 'var(--text-secondary)' }}
+          onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text)'}
+          onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
           aria-label="Close toast"
         >
           <svg

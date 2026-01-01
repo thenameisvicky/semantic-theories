@@ -82,7 +82,22 @@ export default function NotesGrid({ notes }: NotesGridProps) {
           const isBookmarked = bookmarkedNotes.has(note.slug);
           return (
             <div
-              className="cursor-pointer transition-all duration-150 ease-out relative p-4 border border-[#e9e9e7] rounded-lg bg-white shadow-[0_1px_3px_rgba(15,15,15,0.1)] min-h-[200px] flex flex-col overflow-visible z-[1] hover:shadow-[0_2px_8px_rgba(15,15,15,0.2)] hover:border-[#d9d9d7] hover:-translate-y-[1px] hover:z-10"
+              className="cursor-pointer transition-all duration-150 ease-out relative p-4 border rounded-lg min-h-[200px] flex flex-col overflow-visible z-[1] hover:-translate-y-[1px] hover:z-10"
+              style={{
+                borderColor: 'var(--border)',
+                backgroundColor: 'var(--surface)',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.4)';
+                e.currentTarget.style.borderColor = 'var(--border-hover)';
+                e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.3)';
+                e.currentTarget.style.borderColor = 'var(--border)';
+                e.currentTarget.style.backgroundColor = 'var(--surface)';
+              }}
               onClick={() => handleCardClick(note)}
               key={index}
             >
@@ -113,7 +128,7 @@ export default function NotesGrid({ notes }: NotesGridProps) {
                 </Tooltip>
               </div>
               <div className="flex items-center gap-5">
-                <h2 className="text-xl font-bold text-[#37352f] m-0 flex-1">
+                <h2 className="text-xl font-bold m-0 flex-1" style={{ color: 'var(--text)' }}>
                   {note.frontmatter.title || note.slug}
                 </h2>
               </div>
