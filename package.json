@@ -2,12 +2,14 @@
   "name": "obsidianexec",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development next dev --turbopack",
-    "dev:debug": "NODE_OPTIONS='--inspect' next dev --turbopack",
-    "prebuild": "node scripts/generate-vault-bundle.js",
-    "build": "NODE_ENV=production next build",
-    "start": "next start",
+    "dev": "vite",
+    "dev:debug": "NODE_OPTIONS='--inspect' vite",
+    "prebuild": "node scripts/generate-vault-bundle.cjs",
+    "build": "NODE_ENV=production vite build",
+    "build:rspack": "NODE_ENV=production rspack build",
+    "preview": "vite preview",
     "lint": "eslint"
   },
   "dependencies": {
@@ -15,21 +17,23 @@
     "gray-matter": "^4.0.3",
     "indexdb-action": "git+https://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@github.com/thenameisvicky/indexdb-helper-ts.git",
     "marked": "^15.0.12",
-    "next": "15.5.4",
     "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "reactflow": "^11.11.4",
-    "server-only": "^0.0.1"
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@rspack/cli": "^1.0.0",
+    "@rspack/core": "^1.0.0",
+    "@rspack/plugin-react-refresh": "^1.0.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.3.1",
     "eslint": "^9",
-    "eslint-config-next": "15.5.4",
+    "postcss-loader": "^8.2.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite": "^5.4.0"
   }
 }

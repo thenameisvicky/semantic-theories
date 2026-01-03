@@ -1,4 +1,3 @@
-"use client";
 
 import { useState, useEffect } from "react";
 import { THIRUKKURAL_TAMIL } from "@/app/constants";
@@ -67,9 +66,8 @@ export default function KuralHeader() {
     >
       <p
         className={`mt-1 xl font-semi-bold cursor-pointer kural-text ${
-          isSetAsDefault ? "kural-default" : ""
+          isSetAsDefault ? "kural-default" : "text-primary"
         }`}
-        style={{ color: isSetAsDefault ? 'var(--bg)' : 'var(--text)' }}
         onClick={handleKuralClick}
       >
         {THIRUKKURAL_TAMIL[currentKural].split(";")}

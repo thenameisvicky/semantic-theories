@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  /* GitHub Dark Theme Colors */
   --bg: #0d1117;
   --bg-secondary: #161b22;
   --surface: #21262d;
@@ -15,17 +14,14 @@
   --code-bg: #161b22;
   --shadow: rgba(0, 0, 0, 0.3);
   --shadow-hover: rgba(0, 0, 0, 0.4);
-  
-  /* Syntax colors (for code blocks) */
+
   --syntax-orange: #ffa657;
   --syntax-green: #7ee787;
   --syntax-purple: #d2a8ff;
-  
-  /* Error/Warning colors */
+
   --error: #ff7b72;
   --warning: #ffa657;
-  
-  /* Legacy variable names for compatibility */
+
   --notion-bg: var(--bg);
   --notion-bg-secondary: var(--bg-secondary);
   --notion-text: var(--text);
@@ -37,10 +33,10 @@
   --notion-accent-hover: var(--accent-hover);
   --notion-shadow: var(--shadow);
   --notion-shadow-hover: var(--shadow-hover);
-  
+
   --notion-font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
   --notion-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
-  
+
   --notion-spacing-xs: 2px;
   --notion-spacing-sm: 4px;
   --notion-spacing-md: 8px;
@@ -49,7 +45,7 @@
   --notion-spacing-2xl: 24px;
   --notion-spacing-3xl: 32px;
   --notion-spacing-4xl: 40px;
-  
+
   --notion-radius-sm: 3px;
   --notion-radius-md: 6px;
   --notion-radius-lg: 8px;
@@ -520,89 +516,6 @@ body {
   color: var(--text);
 }
 
-.notion-modal {
-  background: var(--notion-bg);
-  border-radius: var(--notion-radius-lg);
-  box-shadow: 0 4px 32px var(--notion-shadow);
-  border: 1px solid var(--notion-border);
-}
-
-.notion-modal-header {
-  border-bottom: 1px solid var(--notion-border);
-  padding: var(--notion-spacing-2xl);
-}
-
-.notion-modal-content {
-  padding: var(--notion-spacing-2xl);
-}
-
-.notion-modal-footer {
-  border-top: 1px solid var(--notion-border);
-  padding: var(--notion-spacing-xl) var(--notion-spacing-2xl);
-  background: var(--notion-bg-secondary);
-}
-
-.notion-button {
-  font-family: var(--notion-font-family);
-  font-size: 14px;
-  font-weight: 500;
-  padding: 6px 12px;
-  border-radius: var(--notion-radius-sm);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  cursor: pointer;
-  transition: all 0.1s ease;
-}
-
-.notion-button:hover {
-  background: var(--surface-hover);
-  border-color: var(--border-hover);
-}
-
-.notion-button-primary {
-  background: var(--accent);
-  color: var(--bg);
-  border-color: var(--accent);
-}
-
-.notion-button-primary:hover {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
-}
-
-.notion-input {
-  font-family: var(--notion-font-family);
-  font-size: 16px;
-  padding: 6px 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--notion-radius-sm);
-  background: var(--bg-secondary);
-  color: var(--text);
-  outline: none;
-  transition: border-color 0.1s ease;
-}
-
-.notion-input:focus {
-  border-color: var(--accent);
-}
-
-.notion-textarea {
-  font-family: var(--notion-font-family);
-  font-size: 14px;
-  padding: 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--notion-radius-sm);
-  background: var(--bg-secondary);
-  color: var(--text);
-  outline: none;
-  resize: none;
-  transition: border-color 0.1s ease;
-}
-
-.notion-textarea:focus {
-  border-color: var(--accent);
-}
 
 .kural-text {
   transition: all 0.2s ease;
@@ -623,9 +536,11 @@ body {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }
+
   100% {
     transform: scale(1);
   }
@@ -633,4 +548,69 @@ body {
 
 .kural-bump {
   animation: kuralBump 0.3s ease;
+}
+
+/* Utility classes for common patterns */
+.bg-secondary {
+  background-color: var(--bg-secondary);
+}
+
+.border {
+  border-color: var(--border);
+}
+
+.text-primary {
+  color: var(--text);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.bg-surface {
+  background-color: var(--surface);
+}
+
+.bg-surface-hover:hover {
+  background-color: var(--surface-hover);
+}
+
+.border-hover:hover {
+  border-color: var(--border-hover);
+}
+
+.shadow-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-card-hover:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.shadow-modal {
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
+}
+
+.shadow-toast {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-tooltip {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.bg-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.bg-surface-hover-transition {
+  transition: background-color 0.1s ease;
+}
+
+.border-hover-transition {
+  transition: border-color 0.1s ease;
+}
+
+.shadow-transition {
+  transition: box-shadow 0.1s ease;
 }

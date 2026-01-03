@@ -1,41 +1,49 @@
-"use client";
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import NoteModal from "./NoteModal";
-import Tooltip from "../common/Tooltip";
-import BookmarkIcon from "../common/BookmarkIcon";
 import { Note } from "../types";
-import { readPreferencesFromClient, writePreferencesToClient } from "../helpers/userPreference.client";
+import RoadMap from "./RoadMap";
+import { Node } from "../common/flowMap/Node";
+import { Edge } from "../common/flowMap/FlowMap";
 
 type NotesGridProps = {
-  notes: Note[];
+  notes?: Note[];
 };
 
 export default function NotesGrid({ notes }: NotesGridProps) {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [bookmarkedNotes, setBookmarkedNotes] = useState<Set<string>>(
-    new Set()
-  );
 
-  useEffect(() => {
-    const loadBookmarks = async () => {
-      try {
-        if (typeof window === "undefined") return;
-        const prefs = await readPreferencesFromClient();
-        if (prefs.bookMarkedCards && Array.isArray(prefs.bookMarkedCards)) {
-          setBookmarkedNotes(new Set(prefs.bookMarkedCards));
-        }
-      } catch (err) {
-        console.error("Error loading preferences:", err);
-      }
-    };
-    loadBookmarks();
-  }, []);
+  // Initial nodes with corrected position property
+  const initialNodes: Node[] = [
+    {
+      id: "1",
+      position: { x: 50, y: 50 },
+      size: { width: 120, height: 60 },
+      data: { label: "Start" },
+    },
+    {
+      id: "2",
+      position: { x: 300, y: 50 },
+      size: { width: 120, height: 60 },
+      data: { label: "Process" },
+    },
+    {
+      id: "3",
+      position: { x: 550, y: 50 },
+      size: { width: 120, height: 60 },
+      data: { label: "End" },
+    },
+  ];
 
-  const handleCardClick = (note: Note) => {
-    setSelectedNote(note);
-    setIsModalOpen(true);
+  const initialEdges: Edge[] = [
+    { id: "1-2", source: "1", target: "2" },
+    { id: "2-3", source: "2", target: "3" },
+  ];
+
+  const handleNodeClick = (node: Node) => {
+    // Future: Map node to note if notes are provided
+    // For now, this is a placeholder
+    console.log("Node clicked:", node);
   };
 
   const handleCloseModal = () => {
@@ -43,100 +51,17 @@ export default function NotesGrid({ notes }: NotesGridProps) {
     setSelectedNote(null);
   };
 
-  const handleBookmarkClick = async (e: React.MouseEvent, note: Note) => {
-    e.stopPropagation();
-    const isBookmarked = bookmarkedNotes.has(note.slug);
-    const newBookmarked = !isBookmarked;
-
-    const newBookmarkedSet = new Set(bookmarkedNotes);
-    if (newBookmarked) {
-      newBookmarkedSet.add(note.slug);
-    } else {
-      newBookmarkedSet.delete(note.slug);
-    }
-    setBookmarkedNotes(newBookmarkedSet);
-
-    try {
-      if (typeof window === "undefined") return;
-      const prefs = await readPreferencesFromClient();
-      
-      if (newBookmarked) {
-        if (!prefs.bookMarkedCards.includes(note.slug)) {
-          prefs.bookMarkedCards.push(note.slug);
-        }
-      } else {
-        prefs.bookMarkedCards = prefs.bookMarkedCards.filter((slug: string) => slug !== note.slug);
-      }
-      
-      await writePreferencesToClient(prefs);
-    } catch (error) {
-      setBookmarkedNotes(bookmarkedNotes);
-      console.error("Error updating bookmark:", error);
-    }
-  };
-
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 overflow-visible">
-        {notes.map((note, index) => {
-          const isBookmarked = bookmarkedNotes.has(note.slug);
-          return (
-            <div
-              className="cursor-pointer transition-all duration-150 ease-out relative p-4 border rounded-lg min-h-[200px] flex flex-col overflow-visible z-[1] hover:-translate-y-[1px] hover:z-10"
-              style={{
-                borderColor: 'var(--border)',
-                backgroundColor: 'var(--surface)',
-                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.4)';
-                e.currentTarget.style.borderColor = 'var(--border-hover)';
-                e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.3)';
-                e.currentTarget.style.borderColor = 'var(--border)';
-                e.currentTarget.style.backgroundColor = 'var(--surface)';
-              }}
-              onClick={() => handleCardClick(note)}
-              key={index}
-            >
-              <div className="absolute -top-2 right-2 z-20">
-                <Tooltip
-                  content={isBookmarked ? "Remove Bookmark" : "Add Bookmark"}
-                  position="top"
-                >
-                  <div
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleBookmarkClick(e, note);
-                    }}
-                    className="cursor-pointer inline-flex"
-                  >
-                    <BookmarkIcon
-                      isBookmarked={isBookmarked}
-                      size={24}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleBookmarkClick(e, note);
-                      }}
-                      aria-label={
-                        isBookmarked ? "Remove bookmark" : "Add bookmark"
-                      }
-                    />
-                  </div>
-                </Tooltip>
-              </div>
-              <div className="flex items-center gap-5">
-                <h2 className="text-xl font-bold m-0 flex-1" style={{ color: 'var(--text)' }}>
-                  {note.frontmatter.title || note.slug}
-                </h2>
-              </div>
-            </div>
-          );
-        })}
+      <div className="min-h-screen bg-[var(--bg)] p-6">
+        <div className="relative w-full border border-[var(--border)] rounded-lg">
+          <RoadMap
+            nodes={initialNodes}
+            edges={initialEdges}
+            onNodeClick={handleNodeClick}
+          />
+        </div>
       </div>
-
       <NoteModal
         note={selectedNote}
         isOpen={isModalOpen}

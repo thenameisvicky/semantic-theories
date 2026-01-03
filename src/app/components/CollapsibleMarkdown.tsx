@@ -1,4 +1,3 @@
-"use client";
 
 import React, { useState, useMemo } from "react";
 import { marked } from "marked";
@@ -39,8 +38,7 @@ function CollapsibleSection({
   const renderHeading = () => {
     const props = {
       id: headingId,
-      className: headingClassName,
-      style: { color: 'var(--text)' } as React.CSSProperties,
+      className: `${headingClassName} text-primary`,
       dangerouslySetInnerHTML: { __html: node.html || "" } as { __html: string },
     };
 
@@ -67,10 +65,9 @@ function CollapsibleSection({
         onClick={onToggle}
       >
         <div
-          className="collapsible-toggle w-[18px] h-[18px] flex items-center justify-center mr-1.5 -ml-6 shrink-0 transition-all duration-200 ease-in-out"
+          className="collapsible-toggle w-[18px] h-[18px] flex items-center justify-center mr-1.5 -ml-6 shrink-0 transition-all duration-200 ease-in-out text-secondary"
           style={{
-            transform: isExpanded ? "rotate(90deg)" : "rotate(0deg)",
-            color: 'var(--text-secondary)'
+            transform: isExpanded ? "rotate(90deg)" : "rotate(0deg)"
           }}
         >
           <svg
@@ -90,10 +87,9 @@ function CollapsibleSection({
       </div>
       {node.children.length > 0 && (
         <div
-          className={`collapsible-content ${isExpanded ? "block" : "hidden"}`}
+          className={`collapsible-content text-left ${isExpanded ? "block" : "hidden"}`}
           style={{
             paddingLeft: `${depth * 8 + 24}px`,
-            textAlign: "left",
           }}
         >
           {node.children.map((child) => {

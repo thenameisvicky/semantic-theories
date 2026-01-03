@@ -1,4 +1,3 @@
-"use client";
 
 /**
  * Database initialization helper for IndexedDB

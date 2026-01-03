@@ -1,4 +1,3 @@
-"use client";
 
 import React, { useState, ReactNode } from "react";
 
@@ -46,44 +45,35 @@ export default function Tooltip({
     setIsVisible(false);
   };
 
-  const positionStyles: Record<TooltipPosition, React.CSSProperties> = {
-    top: {
-      bottom: "100%",
-      left: "50%",
-      transform: "translateX(-50%)",
-      marginBottom: offSet,
-    },
-    bottom: {
-      top: "100%",
-      left: "50%",
-      transform: "translateX(-50%)",
-      marginTop: offSet,
-    },
-    left: {
-      right: "100%",
-      top: "50%",
-      transform: "translateY(-50%)",
-      marginRight: offSet,
-    },
-    right: {
-      left: "100%",
-      top: "50%",
-      transform: "translateY(-50%)",
-      marginLeft: offSet,
-    },
+  const getPositionClasses = () => {
+    switch (position) {
+      case "top":
+        return "bottom-full left-1/2 -translate-x-1/2";
+      case "bottom":
+        return "top-full left-1/2 -translate-x-1/2";
+      case "left":
+        return "right-full top-1/2 -translate-y-1/2";
+      case "right":
+        return "left-full top-1/2 -translate-y-1/2";
+    }
   };
 
-  const tooltipStyle: React.CSSProperties = {
-    ...positionStyles[position],
-  };
-
-  const wrapperStyle: React.CSSProperties = {
-    ...(style || {}),
+  const getOffsetStyle = (): React.CSSProperties => {
+    switch (position) {
+      case "top":
+        return { marginBottom: offSet };
+      case "bottom":
+        return { marginTop: offSet };
+      case "left":
+        return { marginRight: offSet };
+      case "right":
+        return { marginLeft: offSet };
+    }
   };
 
   const arrowSize = 6;
-
   const arrowColor = 'var(--surface)';
+  
   const arrowStyles: Record<TooltipPosition, React.CSSProperties> = {
     top: {
       position: "absolute",
@@ -134,23 +124,17 @@ export default function Tooltip({
   return (
     <div
       className={`relative inline-block ${className}`}
-      style={wrapperStyle}
+      style={style}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {children}
       {!disabled && (
         <div
-          className={`absolute px-2.5 py-1.5 rounded text-xs whitespace-nowrap pointer-events-none z-[9999] transition-opacity duration-200 ease-in-out ${
+          className={`absolute px-2.5 py-1.5 rounded text-xs whitespace-nowrap pointer-events-none z-[9999] transition-opacity duration-200 ease-in-out bg-surface text-primary border border-[var(--border)] shadow-tooltip ${getPositionClasses()} ${
             isVisible ? "opacity-100" : "opacity-0"
           }`}
-          style={{
-            ...tooltipStyle,
-            backgroundColor: 'var(--surface)',
-            color: 'var(--text)',
-            border: '1px solid var(--border)',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
-          }}
+          style={getOffsetStyle()}
           role="tooltip"
           aria-hidden={!isVisible}
         >

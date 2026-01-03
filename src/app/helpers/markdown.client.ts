@@ -1,4 +1,3 @@
-"use client";
 
 import { Note, NoteData } from "@/app/types";
 import dayjs from "dayjs";

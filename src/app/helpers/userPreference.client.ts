@@ -1,4 +1,3 @@
-"use client";
 
 import { UserPreference } from "@/app/models/userpreference.model";
 import { DbAction } from "indexdb-action/dist/DbAction";

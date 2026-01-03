@@ -1,4 +1,3 @@
-"use client";
 
 import React from "react";
 
@@ -22,54 +21,26 @@ export default function Button({
     text: "px-3 py-1.5 rounded-md text-sm font-medium border transition-colors",
   };
 
-  const variantStyles: Record<string, React.CSSProperties> = {
-    default: {
-      backgroundColor: 'var(--surface)',
-      borderColor: 'var(--border)',
-      color: 'var(--text)'
-    },
-    icon: {
-      backgroundColor: 'transparent',
-      color: 'var(--text)'
-    },
-    text: {
-      backgroundColor: 'var(--surface)',
-      borderColor: 'var(--border)',
-      color: 'var(--text)'
-    },
-  };
-
-  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (rest.disabled) return;
-    if (variant === 'default' || variant === 'text') {
-      e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
-      e.currentTarget.style.borderColor = 'var(--border-hover)';
-    } else if (variant === 'icon') {
-      e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
+  const getVariantClasses = () => {
+    const baseClasses = "transition-all duration-150 ease-out";
+    const disabledClasses = rest.disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer";
+    
+    switch (variant) {
+      case 'default':
+        return `${baseClasses} ${variantClasses.default} bg-surface border-[var(--border)] text-primary hover:bg-surface-hover hover:border-[var(--border-hover)] ${disabledClasses}`;
+      case 'icon':
+        return `${baseClasses} ${variantClasses.icon} bg-transparent text-primary hover:bg-surface-hover ${disabledClasses}`;
+      case 'text':
+        return `${baseClasses} ${variantClasses.text} bg-surface border-[var(--border)] text-primary hover:bg-surface-hover hover:border-[var(--border-hover)] ${disabledClasses}`;
+      default:
+        return `${baseClasses} ${variantClasses.default} ${disabledClasses}`;
     }
   };
-
-  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (rest.disabled) return;
-    if (variant === 'default' || variant === 'text') {
-      e.currentTarget.style.backgroundColor = 'var(--surface)';
-      e.currentTarget.style.borderColor = 'var(--border)';
-    } else if (variant === 'icon') {
-      e.currentTarget.style.backgroundColor = 'transparent';
-    }
-  };
-
-  const disabledStyles: React.CSSProperties = rest.disabled ? {
-    opacity: 0.5,
-    cursor: 'not-allowed'
-  } : {};
 
   return (
     <button
-      className={`transition-all duration-150 ease-out ${variantClasses[variant]} ${className} ${rest.disabled ? '' : 'cursor-pointer'}`}
-      style={{ ...variantStyles[variant], ...disabledStyles, ...style }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      className={`${getVariantClasses()} ${className}`}
+      style={style}
       {...rest}
     >
       {children}
