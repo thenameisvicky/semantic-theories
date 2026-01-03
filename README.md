@@ -16,7 +16,7 @@ Several reasons but most of it is
 
 # Architecture KT (I did my best)
 
-This is a frontend-only PWA built with Next.js that runs entirely in the browser. The architecture is intentionally simple: no backend, no API calls (except fetching the vault bundle), and all user data lives in IndexedDB. It's designed to be deployed as static files to GitHub Pages, which means zero server costs and zero server maintenance.
+This is a frontend-only PWA built with React + Vite that runs entirely in the browser. The architecture is intentionally simple: no backend, no API calls (except fetching the vault bundle), and all user data lives in IndexedDB. It's designed to be deployed as static files to GitHub Pages, which means zero server costs and zero server maintenance.
 
 ## Overview
 
@@ -41,13 +41,13 @@ The app follows a straightforward flow: markdown files from your local `src/vaul
   - **`userPreference.client.ts`**: Manages user preferences (bookmarks, folders, default Kural) in IndexedDB.
 
 - **Build Process**:
-  - **`generate-vault-bundle.js`**: Prebuild script that reads all `.md` files from `src/vault/`, parses frontmatter with `gray-matter`, and outputs `public/vault-bundle.json`. This happens before Next.js build, so the bundle is available as a static asset.
+  - **`generate-vault-bundle.cjs`**: Prebuild script that reads all `.md` files from `src/vault/`, parses frontmatter with `gray-matter`, and outputs `public/vault-bundle.json`. This happens before the build, so the bundle is available as a static asset.
 
 ## Data Flow
 
 1. **Build Time**:
    - Prebuild script scans `src/vault/` → generates `public/vault-bundle.json`
-   - Next.js builds static export to `build/` directory
+   - Vite builds static files to `build/` directory
 
 2. **Runtime**:
    - Client fetches `/vault-bundle.json` (static markdown content)
@@ -74,10 +74,10 @@ The storage layer abstracts away IndexedDB's callback-based API with a promise-b
 
 ## Build & Deployment
 
-The app uses Next.js static export (`output: "export"`) configured for GitHub Pages with a base path. The build process:
+The app uses Vite for building static files configured for GitHub Pages with a base path. The build process:
 
-1. Runs `generate-vault-bundle.js` (prebuild hook)
-2. Next.js builds static HTML/JS/CSS to `build/` directory
+1. Runs `generate-vault-bundle.cjs` (prebuild hook)
+2. Vite builds static HTML/JS/CSS to `build/` directory
 3. GitHub Pages serves the `build/` directory
 
 No server-side rendering happens at runtime. Everything is static files served from GitHub's CDN.
@@ -90,7 +90,7 @@ graph TB
         Vault[Markdown Files<br/>src/vault/*.md]
         BundleScript[generate-vault-bundle.js]
         BundleJSON[public/vault-bundle.json]
-        NextBuild[Next.js Build]
+        ViteBuild[Vite Build]
         StaticFiles[Static Files<br/>build/]
     end
 
@@ -110,8 +110,8 @@ graph TB
 
     Vault --> BundleScript
     BundleScript --> BundleJSON
-    BundleJSON --> NextBuild
-    NextBuild --> StaticFiles
+    BundleJSON --> ViteBuild
+    ViteBuild --> StaticFiles
 
     StaticFiles --> Client
     Client --> Fetch

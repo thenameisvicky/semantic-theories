@@ -21,18 +21,12 @@
       "@/*": [
         "./src/*"
       ]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "src/**/*",
-    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

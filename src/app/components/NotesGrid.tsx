@@ -13,7 +13,6 @@ export default function NotesGrid({ notes }: NotesGridProps) {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Initial nodes with corrected position property
   const initialNodes: Node[] = [
     {
       id: "1",
@@ -41,8 +40,6 @@ export default function NotesGrid({ notes }: NotesGridProps) {
   ];
 
   const handleNodeClick = (node: Node) => {
-    // Future: Map node to note if notes are provided
-    // For now, this is a placeholder
     console.log("Node clicked:", node);
   };
 
