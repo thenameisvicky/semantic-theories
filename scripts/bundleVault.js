@@ -39,7 +39,6 @@ function getAllNotesFromVault() {
         if (titleMatch) {
           frontmatter.title = titleMatch[1].trim();
         } else {
-          // Use filename as title
           frontmatter.title = fileName.replace('.md', '').replace(/-/g, ' ');
         }
       }
@@ -49,7 +48,6 @@ function getAllNotesFromVault() {
         if (dateMatch) {
           frontmatter.date = dateMatch[1].trim();
         } else {
-          // Use file modification time
           const stats = fs.statSync(fullPath);
           frontmatter.date = dayjs(stats.mtime).format('MMMM D, YYYY');
         }
@@ -68,16 +66,13 @@ function getAllNotesFromVault() {
   }
 }
 
-// Generate the bundle
 const notes = getAllNotesFromVault();
-
-// Ensure public directory exists
 const publicDir = path.dirname(outputPath);
+
 if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
 
-// Write the bundle
 fs.writeFileSync(outputPath, JSON.stringify(notes, null, 2), 'utf8');
-console.log(`✅ Generated vault bundle with ${notes.length} notes at ${outputPath}`);
+console.log(`Generated vault bundle with ${notes.length} notes at ${outputPath}`);
 

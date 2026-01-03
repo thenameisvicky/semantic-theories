@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { THIRUKKURAL_TAMIL } from "@/app/constants";
+import { THIRUKKURAL_TAMIL } from "@/constants";
 import Tooltip from "../common/Tooltip";
 import { readPreferencesFromClient, writePreferencesToClient } from "../helpers/userPreference.client";
 

@@ -1,14 +1,14 @@
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
-type ToastItem = {
+export type ToastItem = {
   id: string;
   type: ToastType;
   message: string;
   duration?: number;
 };
 
-type ToastType = "success" | "warning" | "error" | "info";
+export type ToastType = "success" | "warning" | "error" | "info";
 
 type ToastProps = {
   type: ToastType;
@@ -16,24 +16,6 @@ type ToastProps = {
   duration?: number;
   onClose: () => void;
 };
-
-export function useToast() {
-  const [toasts, setToasts] = useState<ToastItem[]>([]);
-
-  const showToast = useCallback(
-    (type: ToastType, message: string, duration?: number) => {
-      const id = Math.random().toString(36).substring(2, 9);
-      setToasts((prev) => [...prev, { id, type, message, duration }]);
-    },
-    []
-  );
-
-  const removeToast = useCallback((id: string) => {
-    setToasts((prev) => prev.filter((toast) => toast.id !== id));
-  }, []);
-
-  return { showToast, removeToast, toasts };
-}
 
 function Toast({ type, message, duration = 5000, onClose }: ToastProps) {
   const [isVisible, setIsVisible] = useState(false);
@@ -128,21 +110,29 @@ function Toast({ type, message, duration = 5000, onClose }: ToastProps) {
 
 export default function ToastContainer({
   toasts,
-  onRemove,
 }: {
   toasts: ToastItem[];
-  onRemove: (id: string) => void;
 }) {
+  const [internalToasts, setInternalToasts] = useState<ToastItem[]>(toasts);
+
+  useEffect(() => {
+    setInternalToasts(toasts);
+  }, [toasts]);
+
+  const removeToast = useCallback((id: string) => {
+    setInternalToasts((prev) => prev.filter((toast) => toast.id !== id));
+  }, []);
+
   return (
     <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[10000] pointer-events-none">
       <div className="flex flex-col gap-2 items-center">
-        {toasts.map((toast) => (
+        {internalToasts.map((toast) => (
           <div key={toast.id} className="pointer-events-auto">
             <Toast
               type={toast.type}
               message={toast.message}
               duration={toast.duration}
-              onClose={() => onRemove(toast.id)}
+              onClose={() => removeToast(toast.id)}
             />
           </div>
         ))}

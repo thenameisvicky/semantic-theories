@@ -1,5 +1,5 @@
 
-import { Note, NoteData } from "@/app/types";
+import { Note, NoteData } from "@/types";
 import dayjs from "dayjs";
 import { DbAction } from "indexdb-action/dist/DbAction";
 import { DB_ACTIONS } from "indexdb-action/dist/constants";

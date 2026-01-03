@@ -1,5 +1,5 @@
 
-import { UserPreference } from "@/app/models/userpreference.model";
+import { UserPreference } from "@/models/userpreference.model";
 import { DbAction } from "indexdb-action/dist/DbAction";
 import { DB_ACTIONS } from "indexdb-action/dist/constants";
 import { openDatabase, OBJECT_STORES } from "./dbInit.client";
