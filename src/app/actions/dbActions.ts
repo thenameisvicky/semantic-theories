@@ -115,19 +115,19 @@ export async function updateSelectedFolder(
 /**
  * Adds a new folder
  */
-export async function addFolder(folder: Folder): Promise<void> {
-  try {
-    const prefs = await getUserPreferences();
-    prefs.folders = [...(prefs.folders || []), folder];
-    if (!prefs.selectedFolderId) {
-      prefs.selectedFolderId = folder.id;
-    }
-    await writeUserPreferences(prefs);
-  } catch (error) {
-    console.error("Error adding folder:", error);
-    throw error;
-  }
-}
+// export async function addFolder(folder: Folder): Promise<void> {
+//   try {
+//     const prefs = await getUserPreferences();
+//     prefs.folders = [...(prefs.folders || []), folder];
+//     if (!prefs.selectedFolderId) {
+//       prefs.selectedFolderId = folder.id;
+//     }
+//     await writeUserPreferences(prefs);
+//   } catch (error) {
+//     console.error("Error adding folder:", error);
+//     throw error;
+//   }
+// }
 
 /**
  * Toggles bookmark status for a note
@@ -196,55 +196,55 @@ export async function getAllNotesFromIndexedDB(): Promise<
 /**
  * Creates a note in IndexedDB
  */
-export async function createNoteInIndexedDB(
-  title: string
-): Promise<{ success: boolean; error?: string; slug?: string }> {
-  try {
-    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+// export async function createNoteInIndexedDB(
+//   title: string
+// ): Promise<{ success: boolean; error?: string; slug?: string }> {
+//   try {
+//     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
-    // Check if note already exists
-    const database = await openDatabase();
-    const readAction = new DbAction<
-      { slug: string; data: NoteData },
-      { slug: string; data: NoteData }
-    >(DB_ACTIONS.READ, database, OBJECT_STORES.NOTES);
+//     // Check if note already exists
+//     const database = await openDatabase();
+//     const readAction = new DbAction<
+//       { slug: string; data: NoteData },
+//       { slug: string; data: NoteData }
+//     >(DB_ACTIONS.READ, database, OBJECT_STORES.NOTES);
 
-    const existingNotes = await readAction.execute();
-    const exists = Array.isArray(existingNotes) && existingNotes.some((n) => n.slug === slug);
+//     const existingNotes = await readAction.execute();
+//     const exists = Array.isArray(existingNotes) && existingNotes.some((n) => n.slug === slug);
 
-    if (exists) {
-      return { success: false, error: "Note with this title already exists" };
-    }
+//     if (exists) {
+//       return { success: false, error: "Note with this title already exists" };
+//     }
 
-    // Create new note
-    const createdDate = new Date().toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+//     // Create new note
+//     const createdDate = new Date().toLocaleDateString("en-US", {
+//       year: "numeric",
+//       month: "long",
+//       day: "numeric",
+//     });
 
-    const noteData: NoteData = {
-      title,
-      createdDate,
-      content: `# ${title}\n\nYour content here...`,
-    };
+//     const noteData: NoteData = {
+//       title,
+//       createdDate,
+//       content: `# ${title}\n\nYour content here...`,
+//     };
 
-    const writeAction = new DbAction<
-      { slug: string; data: NoteData },
-      { slug: string; data: NoteData }
-    >(DB_ACTIONS.WRITE, database, OBJECT_STORES.NOTES);
+//     const writeAction = new DbAction<
+//       { slug: string; data: NoteData },
+//       { slug: string; data: NoteData }
+//     >(DB_ACTIONS.WRITE, database, OBJECT_STORES.NOTES);
 
-    await writeAction
-      .setDocumentData({
-        slug,
-        data: noteData,
-      })
-      .execute();
+//     await writeAction
+//       .setDocumentData({
+//         slug,
+//         data: noteData,
+//       })
+//       .execute();
 
-    return { success: true, slug };
-  } catch (error) {
-    console.error("Error creating note in IndexedDB:", error);
-    return { success: false, error: "Failed to create note" };
-  }
-}
+//     return { success: true, slug };
+//   } catch (error) {
+//     console.error("Error creating note in IndexedDB:", error);
+//     return { success: false, error: "Failed to create note" };
+//   }
+// }
 

@@ -9,11 +9,11 @@ import ToastContainer, { useToast } from "./common/ToastContainer";
 import {
   Note,
   Folder,
-  NotesStorage,
   CreateNoteResponse,
 } from "./types";
 import { readPreferencesFromClient, writePreferencesToClient } from "./helpers/userPreference.client";
-import { getAllNotesFromLocalStorage, createNoteInLocalStorage } from "./helpers/markdown.client";
+import { getAllNotesFromLocalStorage } from "./helpers/markdown.client";
+// import { createNoteInLocalStorage } from "./helpers/markdown.client";
 import { DbAction } from "indexdb-action/dist/DbAction";
 import { DB_ACTIONS } from "indexdb-action/dist/constants";
 import { openDatabase, OBJECT_STORES } from "./helpers/dbInit.client";
@@ -125,62 +125,62 @@ export default function Home() {
     }
   };
 
-  const handleCreateNote = async (
-    title: string
-  ): Promise<CreateNoteResponse> => {
-    try {
-      if (typeof window === "undefined") {
-        return { success: false, error: "Window not available" };
-      }
-      const result = await createNoteInLocalStorage(title);
-      if (result.success) {
-        showToast("success", "Note created successfully", 5000);
-        loadNotes();
-        return { success: true };
-      } else {
-        if (result.error?.includes("already exists")) {
-          showToast("warning", "Note with this title already exists", 5000);
-        } else {
-          showToast("error", result.error || "Failed to create note", 5000);
-        }
-        return { success: false, error: result.error };
-      }
-    } catch (error) {
-      console.error("Error creating note:", error);
-      showToast("error", "Failed to create note", 5000);
-      return { success: false, error: "Failed to create note" };
-    }
-  };
+  // const handleCreateNote = async (
+  //   title: string
+  // ): Promise<CreateNoteResponse> => {
+  //   try {
+  //     if (typeof window === "undefined") {
+  //       return { success: false, error: "Window not available" };
+  //     }
+  //     const result = await createNoteInLocalStorage(title);
+  //     if (result.success) {
+  //       showToast("success", "Note created successfully", 5000);
+  //       loadNotes();
+  //       return { success: true };
+  //     } else {
+  //       if (result.error?.includes("already exists")) {
+  //         showToast("warning", "Note with this title already exists", 5000);
+  //       } else {
+  //         showToast("error", result.error || "Failed to create note", 5000);
+  //       }
+  //       return { success: false, error: result.error };
+  //     }
+  //   } catch (error) {
+  //     console.error("Error creating note:", error);
+  //     showToast("error", "Failed to create note", 5000);
+  //     return { success: false, error: "Failed to create note" };
+  //   }
+  // };
 
-  const handleCreateFolder = async (
-    name: string,
-    noteIds: string[]
-  ): Promise<void> => {
-    const newFolder: Folder = {
-      id: Math.random().toString(36).substring(2, 9),
-      name,
-      noteIds,
-    };
+  // const handleCreateFolder = async (
+  //   name: string,
+  //   noteIds: string[]
+  // ): Promise<void> => {
+  //   const newFolder: Folder = {
+  //     id: Math.random().toString(36).substring(2, 9),
+  //     name,
+  //     noteIds,
+  //   };
 
-    try {
-      if (typeof window === "undefined") return;
-      const prefs = await readPreferencesFromClient();
-      prefs.folders = [...(prefs.folders || []), newFolder];
-      if (!prefs.selectedFolderId) {
-        prefs.selectedFolderId = newFolder.id;
-        setSelectedFolderId(newFolder.id);
-      }
-      await writePreferencesToClient(prefs);
-      setFolders(prefs.folders);
-      setIsFolderModalOpen(false);
-      showToast("success", "Folder created successfully", 5000);
-    } catch (error) {
-      console.error("Error creating folder:", error);
-      const errorMessage =
-        error instanceof Error ? error.message : "Failed to create folder";
-      showToast("error", errorMessage, 5000);
-    }
-  };
+  //   try {
+  //     if (typeof window === "undefined") return;
+  //     const prefs = await readPreferencesFromClient();
+  //     prefs.folders = [...(prefs.folders || []), newFolder];
+  //     if (!prefs.selectedFolderId) {
+  //       prefs.selectedFolderId = newFolder.id;
+  //       setSelectedFolderId(newFolder.id);
+  //     }
+  //     await writePreferencesToClient(prefs);
+  //     setFolders(prefs.folders);
+  //     setIsFolderModalOpen(false);
+  //     showToast("success", "Folder created successfully", 5000);
+  //   } catch (error) {
+  //     console.error("Error creating folder:", error);
+  //     const errorMessage =
+  //       error instanceof Error ? error.message : "Failed to create folder";
+  //     showToast("error", errorMessage, 5000);
+  //   }
+  // };
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--bg)' }}>
@@ -189,7 +189,7 @@ export default function Home() {
         <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>MD Runner</h1>
         <KuralHeader />
         <div className="mt-4 flex items-center gap-4 flex-wrap">
-          <Button
+          {/* <Button
             variant="default"
             onClick={() => setIsCreateModalOpen(true)}
             className="px-4 py-2 flex items-center gap-2"
@@ -230,7 +230,7 @@ export default function Home() {
               />
             </svg>
             Add Folder
-          </Button>
+          </Button> */}
           {folders.length > 0 && (
             <div className="flex items-center gap-2 flex-wrap">
               <button
@@ -296,7 +296,7 @@ export default function Home() {
         )}
       </div>
 
-      <NoteModal
+      {/* <NoteModal
         note={null}
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
@@ -312,7 +312,7 @@ export default function Home() {
           folders={folders}
           onCreateFolder={handleCreateFolder}
         />
-      )}
+      )} */}
     </div>
   );
 }

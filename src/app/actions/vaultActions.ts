@@ -61,25 +61,25 @@ export async function getAllNotes(): Promise<Note[]> {
   }
 }
 
-export async function createNote(
-  title: string
-): Promise<{ success: boolean; error?: string; slug?: string }> {
-  try {
-    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-    const fileName = `${slug}.md`;
-    const fullPath = path.join(vaultPath, fileName);
+// export async function createNote(
+//   title: string
+// ): Promise<{ success: boolean; error?: string; slug?: string }> {
+//   try {
+//     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+//     const fileName = `${slug}.md`;
+//     const fullPath = path.join(vaultPath, fileName);
 
-    if (fs.existsSync(fullPath)) {
-      return { success: false, error: "Note with this title already exists" };
-    }
+//     if (fs.existsSync(fullPath)) {
+//       return { success: false, error: "Note with this title already exists" };
+//     }
 
-    const createdDate = dayjs().format("MMMM D, YYYY");
-    const content = `---\ntitle: ${title}\ndate: ${createdDate}\n---\n\n# ${title}\n\nYour content here...`;
+//     const createdDate = dayjs().format("MMMM D, YYYY");
+//     const content = `---\ntitle: ${title}\ndate: ${createdDate}\n---\n\n# ${title}\n\nYour content here...`;
 
-    fs.writeFileSync(fullPath, content, "utf8");
-    return { success: true, slug };
-  } catch (error) {
-    console.error("Error creating note:", error);
-    return { success: false, error: "Failed to create note" };
-  }
-}
+//     fs.writeFileSync(fullPath, content, "utf8");
+//     return { success: true, slug };
+//   } catch (error) {
+//     console.error("Error creating note:", error);
+//     return { success: false, error: "Failed to create note" };
+//   }
+// }

@@ -89,20 +89,20 @@ export default function NoteModal({ note, isOpen, onClose, mode = "view", onCrea
     }
   };
 
-  const handleCreateNote = async () => {
-    if (!title.trim() || !onCreateNote) return;
+  // const handleCreateNote = async () => {
+  //   if (!title.trim() || !onCreateNote) return;
     
-    setIsCreating(true);
-    const result = await onCreateNote(title.trim());
-    setIsCreating(false);
+  //   setIsCreating(true);
+  //   const result = await onCreateNote(title.trim());
+  //   setIsCreating(false);
     
-    if (result.success) {
-      onClose();
-      setTitle("");
-    } else {
-      // Error will be handled by parent component via toast
-    }
-  };
+  //   if (result.success) {
+  //     onClose();
+  //     setTitle("");
+  //   } else {
+  //     // Error will be handled by parent component via toast
+  //   }
+  // };
 
   if (!isOpen) return null;
   if (!isCreateMode && !note) return null;
@@ -136,7 +136,7 @@ export default function NoteModal({ note, isOpen, onClose, mode = "view", onCrea
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
-                    handleCreateNote();
+                    // handleCreateNote();
                   }
                 }}
               />
@@ -215,7 +215,7 @@ export default function NoteModal({ note, isOpen, onClose, mode = "view", onCrea
               </>
             )}
           </div>
-          {isCreateMode ? (
+          {/* {isCreateMode ? (
             <div className="flex gap-2">
               <Button
                 variant="text"
@@ -242,7 +242,7 @@ export default function NoteModal({ note, isOpen, onClose, mode = "view", onCrea
             >
               Close
             </Button>
-          )}
+          )} */}
         </div>
       </div>
     </div>

@@ -71,56 +71,56 @@ export async function getAllNotesFromLocalStorage(): Promise<Note[]> {
  * Creates a note in IndexedDB
  * Replaces localStorage-based createNoteInLocalStorage
  */
-export async function createNoteInLocalStorage(
-  title: string
-): Promise<{ success: boolean; error?: string; slug?: string }> {
-  try {
-    if (typeof window === "undefined") {
-      return { success: false, error: "Window not available" };
-    }
+// export async function createNoteInLocalStorage(
+//   title: string
+// ): Promise<{ success: boolean; error?: string; slug?: string }> {
+//   try {
+//     if (typeof window === "undefined") {
+//       return { success: false, error: "Window not available" };
+//     }
 
-    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-    const database = await openDatabase();
+//     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+//     const database = await openDatabase();
 
-    // Check if note already exists
-    const readAction = new DbAction<
-      { slug: string; data: NoteData },
-      { slug: string; data: NoteData }
-    >(DB_ACTIONS.READ, database, OBJECT_STORES.NOTES);
+//     // Check if note already exists
+//     const readAction = new DbAction<
+//       { slug: string; data: NoteData },
+//       { slug: string; data: NoteData }
+//     >(DB_ACTIONS.READ, database, OBJECT_STORES.NOTES);
 
-    const existingNotes = await readAction.execute();
-    const exists = existingNotes?.some((n) => n.slug === slug);
+//     const existingNotes = await readAction.execute();
+//     const exists = existingNotes?.some((n) => n.slug === slug);
 
-    if (exists) {
-      return { success: false, error: "Note with this title already exists" };
-    }
+//     if (exists) {
+//       return { success: false, error: "Note with this title already exists" };
+//     }
 
-    // Create new note
-    const createdDate = dayjs().format("MMMM D, YYYY");
-    const noteData: NoteData = {
-      title,
-      createdDate,
-      content: `# ${title}\n\nYour content here...`,
-    };
+//     // Create new note
+//     const createdDate = dayjs().format("MMMM D, YYYY");
+//     const noteData: NoteData = {
+//       title,
+//       createdDate,
+//       content: `# ${title}\n\nYour content here...`,
+//     };
 
-    const writeAction = new DbAction<
-      { slug: string; data: NoteData },
-      { slug: string; data: NoteData }
-    >(DB_ACTIONS.WRITE, database, OBJECT_STORES.NOTES);
+//     const writeAction = new DbAction<
+//       { slug: string; data: NoteData },
+//       { slug: string; data: NoteData }
+//     >(DB_ACTIONS.WRITE, database, OBJECT_STORES.NOTES);
 
-    await writeAction
-      .setDocumentData({
-        slug,
-        data: noteData,
-      })
-      .execute();
+//     await writeAction
+//       .setDocumentData({
+//         slug,
+//         data: noteData,
+//       })
+//       .execute();
 
-    return { success: true, slug };
-  } catch (error) {
-    console.error("Error creating note in IndexedDB:", error);
-    return { success: false, error: "Failed to create note" };
-  }
-}
+//     return { success: true, slug };
+//   } catch (error) {
+//     console.error("Error creating note in IndexedDB:", error);
+//     return { success: false, error: "Failed to create note" };
+//   }
+// }
 
 
 
