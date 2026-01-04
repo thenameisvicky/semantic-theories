@@ -6,7 +6,7 @@ import type { Node } from "../common/flowMap/Node";
 import type { Edge } from "../common/flowMap/FlowMap";
 
 const nodeToMarkdown: Record<string, string> = {
-  "foundational": "Foundational SDE Fluency.md",
+  foundational: "Foundational SDE Fluency.md",
   "ai-engineering": "AI Engineering.md",
   "system-design": "System Design + Architecture.md",
   "react-internals": "React Internals.md",
@@ -14,14 +14,9 @@ const nodeToMarkdown: Record<string, string> = {
   "browser-engine": "Browser Engine.md",
   "cloud-engineering": "Cloud Engineering.md",
   "machine-learning": "MachineLearning.md",
-  "networking": "Networking.md",
-  "infrastructure": "Infrastructure.md",
+  networking: "Networking.md",
+  infrastructure: "Infrastructure.md",
 };
-
-const markdownModules = import.meta.glob<string>("../vault/*.md?raw", { 
-  import: "default",
-  eager: false 
-});
 
 const nodes: Node[] = [
   {
@@ -108,10 +103,14 @@ export default function RoadmapView() {
   const [isLoading, setIsLoading] = useState(false);
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
-  const showToast = (type: "success" | "warning" | "error" | "info", message: string) => {
-    // Prevent duplicate toasts with the same message
+  const showToast = (
+    type: "success" | "warning" | "error" | "info",
+    message: string
+  ) => {
     setToasts((prev) => {
-      const isDuplicate = prev.some((toast) => toast.message === message && toast.type === type);
+      const isDuplicate = prev.some(
+        (toast) => toast.message === message && toast.type === type
+      );
       if (isDuplicate) {
         return prev;
       }
@@ -120,35 +119,37 @@ export default function RoadmapView() {
     });
   };
 
-  const handleNodeClick = async (node: Node) => {
-    const markdownFile = nodeToMarkdown[node.id];
-    if (!markdownFile) {
-      showToast("error", "No markdown file found for this node.");
-      return;
-    }
+  // const handleNodeClick = async (node: Node) => {
+  //   const markdownFile = nodeToMarkdown[node.id];
+  //   if (!markdownFile) {
+  //     showToast("error", "No markdown file found for this node.");
+  //     return;
+  //   }
 
-    setIsLoading(true);
-    try {
-      const filePath = `../vault/${markdownFile}?raw`;
-      const loadMarkdown = markdownModules[filePath];
-      
-      if (!loadMarkdown) {
-        showToast("error", `Markdown file not found: ${markdownFile}`);
-        setIsLoading(false);
-        return;
-      }
-      const rawMarkdown = await loadMarkdown();
-      const html = typeof rawMarkdown === 'string' 
-        ? marked.parse(rawMarkdown) as string
-        : String(rawMarkdown);
-      setMarkdownContent(html);
-    } catch (error) {
-      console.error("Error loading markdown:", error);
-      showToast("error", `Failed to load markdown file: ${markdownFile}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //   setIsLoading(true);
+  //   try {
+  //     const filePath = `/src/vault/${markdownFile}`;
+  //     const getMarkdown = markdownModules[filePath];
+
+  //     if (!getMarkdown) {
+  //       showToast("error", `Markdown file not found: ${markdownFile}`);
+  //       setIsLoading(false);
+  //       return;
+  //     }
+
+  //     const rawMarkdown = await getMarkdown();
+
+  //     const html =
+  //       typeof rawMarkdown === "string"
+  //         ? (marked.parse(rawMarkdown) as string)
+  //         : String(rawMarkdown);
+  //     setMarkdownContent(html);
+  //   } catch (error) {
+  //     showToast("error", `Failed to load markdown file: ${markdownFile}`);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-[var(--bg)] flex flex-col">
@@ -156,13 +157,13 @@ export default function RoadmapView() {
       <div className="border-b p-6 bg-secondary border">
         <h1 className="text-2xl font-bold text-primary">MD Runner</h1>
       </div>
-      
+
       <div className="flex-1 flex items-center justify-center p-8 overflow-auto">
         <div className="w-full max-w-6xl flex justify-center">
           <RoadMap
             nodes={nodes}
             edges={edges}
-            onNodeClick={handleNodeClick}
+            // onNodeClick={handleNodeClick}
             height={500}
           />
         </div>
@@ -184,4 +185,3 @@ export default function RoadmapView() {
     </div>
   );
 }
-

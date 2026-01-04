@@ -4,7 +4,7 @@ const matter = require('gray-matter');
 const dayjs = require('dayjs');
 
 const vaultPath = path.join(process.cwd(), 'src', 'vault');
-const outputPath = path.join(process.cwd(), 'public', 'vault-bundle.json');
+const outputPath = path.join(process.cwd(), 'public', 'vaultBundle.json');
 
 function getAllNotesFromVault() {
   try {
