@@ -1,20 +1,20 @@
-const fs = require('fs');
-const path = require('path');
-const matter = require('gray-matter');
-const dayjs = require('dayjs');
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import dayjs from "dayjs";
 
-const vaultPath = path.join(process.cwd(), 'src', 'vault');
-const outputPath = path.join(process.cwd(), 'public', 'vaultBundle.json');
+const vaultPath = path.join(process.cwd(), "src", "vault");
+const outputPath = path.join(process.cwd(), "public", "vaultBundle.json");
 
 function getAllNotesFromVault() {
   try {
     const files = fs
       .readdirSync(vaultPath)
-      .filter((file) => file.endsWith('.md') && !file.startsWith('.'));
+      .filter((file) => file.endsWith(".md") && !file.startsWith("."));
 
     const notes = files.map((fileName) => {
       const fullPath = path.join(vaultPath, fileName);
-      const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const fileContents = fs.readFileSync(fullPath, "utf8");
       let frontmatter = {};
       let content = fileContents;
 
@@ -24,7 +24,7 @@ function getAllNotesFromVault() {
           Object.entries(parsed.data).map(([key, value]) => [
             key,
             value instanceof Date
-              ? dayjs(value).format('MMMM D, YYYY')
+              ? dayjs(value).format("MMMM D, YYYY")
               : String(value),
           ])
         );
@@ -39,7 +39,7 @@ function getAllNotesFromVault() {
         if (titleMatch) {
           frontmatter.title = titleMatch[1].trim();
         } else {
-          frontmatter.title = fileName.replace('.md', '').replace(/-/g, ' ');
+          frontmatter.title = fileName.replace(".md", "").replace(/-/g, " ");
         }
       }
 
@@ -49,19 +49,19 @@ function getAllNotesFromVault() {
           frontmatter.date = dateMatch[1].trim();
         } else {
           const stats = fs.statSync(fullPath);
-          frontmatter.date = dayjs(stats.mtime).format('MMMM D, YYYY');
+          frontmatter.date = dayjs(stats.mtime).format("MMMM D, YYYY");
         }
       }
 
       return {
-        slug: fileName.replace('.md', ''),
+        slug: fileName.replace(".md", ""),
         frontmatter,
         content,
       };
     });
     return notes;
   } catch (error) {
-    console.error('Error reading markdown files:', error);
+    console.error("Error reading markdown files:", error);
     return [];
   }
 }
@@ -73,6 +73,7 @@ if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
 
-fs.writeFileSync(outputPath, JSON.stringify(notes, null, 2), 'utf8');
-console.log(`Generated vault bundle with ${notes.length} notes at ${outputPath}`);
-
+fs.writeFileSync(outputPath, JSON.stringify(notes, null, 2), "utf8");
+console.log(
+  `Generated vault bundle with ${notes.length} notes at ${outputPath}`
+);
