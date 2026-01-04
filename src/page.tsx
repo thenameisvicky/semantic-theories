@@ -20,15 +20,14 @@ export default function Home() {
         const rowHeight = 30;
         const rowGap = 70;
         const topPosition = lineIndex * (rowHeight + rowGap);
-        const duplicatedLine = [...lineKurals, ...lineKurals];
+        const duplicatedLine = [...lineKurals, ...lineKurals, ...lineKurals, ...lineKurals];
 
         return (
           <div
             key={lineIndex}
-            className="absolute left-0 w-full pointer-events-none"
+            className="absolute left-0 w-full pointer-events-none overflow-hidden"
             style={{ top: topPosition }}
           >
-
             <div
               className="flex animate-scroll-right-left"
               style={{ animationDuration: `${80 + lineIndex * 3}s` }}
@@ -53,17 +52,31 @@ export default function Home() {
       })}
 
       <div className="relative z-20 flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-7xl font-bold text-[var(--text)] mb-8 tracking-wide">
-          MD Runner
+        <h1 className="text-7xl font-extrabold italic text-[var(--text)] mb-8 tracking-wide">
+          Shogun Dev
         </h1>
         <button
           onClick={() => setShowRoadmap(true)}
-          className="px-8 py-4 bg-[var(--accent)] text-[var(--bg)] font-semibold rounded-lg hover:bg-[var(--accent-hover)] transition-colors duration-200 shadow-lg"
+          className="px-8 py-4 bg-[var(--accent)] text-[var(--bg)] font-bold rounded-lg hover:bg-[var(--accent-hover)] transition-colors duration-200 shadow-lg flex gap-2 text-xl"
         >
-          Software Development Engineer
+          Software Development
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="inline-block"
+          >
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
         </button>
       </div>
     </div>
   );
 }
-
