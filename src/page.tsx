@@ -14,17 +14,11 @@ export default function Home() {
     lines.push(THIRUKKURAL_TAMIL.slice(i, i + 3));
   }
 
-  const totalLinesNeeded = 20;
-  const extendedLines = [];
-  for (let i = 0; i < totalLinesNeeded; i++) {
-    extendedLines.push(lines[i % lines.length]);
-  }
-
   return (
     <div className="min-h-screen bg-[var(--bg)] relative overflow-hidden">
-      {extendedLines.map((lineKurals, lineIndex) => {
-        const rowHeight = 40;
-        const rowGap = 40;
+      {lines.map((lineKurals, lineIndex) => {
+        const rowHeight = 30;
+        const rowGap = 70;
         const topPosition = lineIndex * (rowHeight + rowGap);
         const duplicatedLine = [...lineKurals, ...lineKurals];
 
@@ -44,7 +38,7 @@ export default function Home() {
                 return (
                   <div
                     key={kuralIndex}
-                    className={`text-[var(--text-secondary)] text-lg mx-4 opacity-50 transition-all duration-300`}
+                    className={`text-[var(--text-secondary)] text-2xl mx-10 opacity-50 transition-all duration-300`}
                   >
                     <div className="whitespace-nowrap">{parts[0]}</div>
                     {parts[1] && (
@@ -67,7 +61,6 @@ export default function Home() {
           className="px-8 py-4 bg-[var(--accent)] text-[var(--bg)] font-semibold rounded-lg hover:bg-[var(--accent-hover)] transition-colors duration-200 shadow-lg"
         >
           Software Development Engineer
-          
         </button>
       </div>
     </div>
