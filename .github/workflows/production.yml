@@ -6,8 +6,13 @@ on:
       branch:
         description: "Branch to deploy"
         required: true
-        type: string
+        type: choice
         default: "master"
+        options:
+          - master
+          - develop
+          - staging
+
       email:
         description: "Enter deployment email"
         required: true
