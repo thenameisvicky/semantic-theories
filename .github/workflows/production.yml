@@ -21,21 +21,6 @@ jobs:
       pull-requests: read
 
     steps:
-      - name: Validate branch input
-        run: |
-          BRANCH="${{ github.event.inputs.branch }}"
-          if [ -z "$BRANCH" ]; then
-            echo "Branch name cannot be empty"
-            exit 1
-          fi
-          echo "Branch to deploy: $BRANCH"
-
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
-          fetch-depth: 0
-
       - name: Verify email from input
         id: verify-email
         run: |
@@ -70,7 +55,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.branch }}
+          ref: ${{ github.ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
