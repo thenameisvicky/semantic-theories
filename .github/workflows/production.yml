@@ -3,16 +3,6 @@ name: Production
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: "Branch to deploy"
-        required: true
-        type: choice
-        default: "master"
-        options:
-          - master
-          - develop
-          - staging
-
       email:
         description: "Enter deployment email"
         required: true
@@ -43,7 +33,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.branch }}
+          ref: ${{ github.ref }}
           fetch-depth: 0
 
       - name: Verify email from input
