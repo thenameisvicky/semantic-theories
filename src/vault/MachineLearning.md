@@ -1,5 +1,5 @@
 ---
-title: Machine Learning - ML Inferenc Platform
+title: Machine Learning - ML Inference Platform
 date: 2025-12-21
 ---
 
@@ -9,7 +9,7 @@ date: 2025-12-21
 - A model is just a function that learned from the data.
 - AI engineering is about training a function, saving it, serving it safely, and scaling it cheaply.
 - Every AI model used in production today is a form of machine learning model, specialized by the task it performs.
-- **Types of Models** (I have only mentioned big ones others not for now).
+- **Types of Models (I have only mentioned big ones others not for now)**
   - Machine learning model (ML)
     1. Learns patterns from data.
     2. Outputs predictions.

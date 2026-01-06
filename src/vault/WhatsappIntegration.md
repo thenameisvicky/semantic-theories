@@ -271,3 +271,53 @@ Meta only validates:
   <https://developers.facebook.com/docs/whatsapp/cloud-api/get-started>
 - Meta Business Manager  
   <https://business.facebook.com/>
+
+## ArkaConnect - Ai Powred Marketing Tool
+
+### Bussiness Idea
+
+- Target users are small shops, tution centers, enterprices, goverment and who ever wanna send messages or run campagain throught whatsapp to customers.
+- Core problem small bussiness cannot grow to large level without marketing also marketing benifits customers they will come to know the products they needed.
+- Whatsapp is trusted platform so i chose this, small insta pages too can market their bussiness in whtsapp using my product.
+- My SaaS wins because i have very low plans for my customers small bussiness will use it i also have planned to provide full assistantce and localize globalize my product so small bussiness world wide will use mine i am happy even if 10 customers uses mine and 500 rupees per sub 10*500 = 5,000 i am happy, i dont plan on hiring a team until i alone make 1 crore without any investors.
+- AI i use my own inference to generate text personalized messages for customers and dashboard analytical datas i will build ML models for data analyctis and stuffs as i needed, cause according to me having one brain do all the jobs is not as efficent as having multiple brains to do the job which the brain spealicied with.
+
+### Product Spec for MVP
+
+- Campagains occationaly festival times -> festival messages, onboarding -> onboarding messages, and so on...
+- Bussiness building strategy advisor chat bot.
+- Bussiness ROI dashboard.
+- Contacted history (user to customers and customer to user).
+- Activity history.
+- Customized campagain messages generation with previous context.
+- Internal RAG to get data for LLM.
+- Can also update their available stocsk and stuffs a mini warehouse management.
+- more will be coming releated to enterley to develop bussiness be it what ever bussniness.
+- Pricings free ( with no AI, limited messages and customers per campagain), pro with unlimited customers to add in campagain but no previous context just in customized message generation for occation - 3,000 rupees per month, Enterprice (custom plans all custmizable unlimited) - 10,000 rupee per month.
+- All the above is not including integration cost just platform fees integrations seperate billing.
+- Scale i am expecting 30 - 40 customers enterprice 10, pro 10 20 - 25 free.
+- Secoruty Oauth and SSO logins i will implment it after launching MVP with basic auth.
+
+### High-Level Design
+
+- client, server, and LLM, ML inference.
+- Lightewight build client, containerized server with k3 or k8 NGINX, domain in cloudflare.
+- MERN stack for AI python , API layer in express.
+- Data flow mean ? i dont know much about proper HLD or LLD.
+- I have not yet decided i need more time to think about scalability and relaiability in short i plan to keep server up all the time scale wont be much until product customer is out of india i think.
+
+### Low level Design
+
+- I need time to comeup with one but i have decided to use microservice, queue system for payments.
+
+### Ai integrations
+
+- I mentioned in Product spec anything other than that i need to think.
+
+### Engineering and scaling
+
+- CICD - Githubactions Docker kubernetes.
+- feature flags mean to show feature in user interaface ? if yes then flags will be in company level (shops or any name i need to comeup with).
+- Multi tentancy mean ?
+- Oauth, SSO, sessions.
+- Cost optimizations ? self hosting i just need to cover my food electricity bill and domain rent everting i need to pay off with customers money and i need to make some money to save some.

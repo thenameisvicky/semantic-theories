@@ -155,7 +155,7 @@ export default function RoadmapView() {
     <div className="min-h-screen bg-[var(--bg)] flex flex-col">
       <ToastContainer toasts={toasts} />
       <div className="border-b p-6 bg-secondary border">
-        <h1 className="text-2xl font-bold text-primary">Shogun Dev</h1>
+        <h1 className="text-2xl font-bold text-primary">Arka Vault</h1>
       </div>
 
       <div className="flex-1 flex items-center justify-center p-8 overflow-auto">
