@@ -1,0 +1,79 @@
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import dayjs from "dayjs";
+
+const vaultPath = path.join(process.cwd(), "src", "vault");
+const outputPath = path.join(process.cwd(), "public", "vaultBundle.json");
+
+function getAllNotesFromVault() {
+  try {
+    const files = fs
+      .readdirSync(vaultPath)
+      .filter((file) => file.endsWith(".md") && !file.startsWith("."));
+
+    const notes = files.map((fileName) => {
+      const fullPath = path.join(vaultPath, fileName);
+      const fileContents = fs.readFileSync(fullPath, "utf8");
+      let frontmatter = {};
+      let content = fileContents;
+
+      try {
+        const parsed = matter(fileContents);
+        frontmatter = Object.fromEntries(
+          Object.entries(parsed.data).map(([key, value]) => [
+            key,
+            value instanceof Date
+              ? dayjs(value).format("MMMM D, YYYY")
+              : String(value),
+          ])
+        );
+        content = parsed.content;
+      } catch {
+        content = fileContents;
+        frontmatter = {};
+      }
+
+      if (!frontmatter.title) {
+        const titleMatch = content.match(/^title:\s*(.+)$/m);
+        if (titleMatch) {
+          frontmatter.title = titleMatch[1].trim();
+        } else {
+          frontmatter.title = fileName.replace(".md", "").replace(/-/g, " ");
+        }
+      }
+
+      if (!frontmatter.date) {
+        const dateMatch = content.match(/^date:\s*(.+)$/m);
+        if (dateMatch) {
+          frontmatter.date = dateMatch[1].trim();
+        } else {
+          const stats = fs.statSync(fullPath);
+          frontmatter.date = dayjs(stats.mtime).format("MMMM D, YYYY");
+        }
+      }
+
+      return {
+        slug: fileName.replace(".md", ""),
+        frontmatter,
+        content,
+      };
+    });
+    return notes;
+  } catch (error) {
+    console.error("Error reading markdown files:", error);
+    return [];
+  }
+}
+
+const notes = getAllNotesFromVault();
+const publicDir = path.dirname(outputPath);
+
+if (!fs.existsSync(publicDir)) {
+  fs.mkdirSync(publicDir, { recursive: true });
+}
+
+fs.writeFileSync(outputPath, JSON.stringify(notes, null, 2), "utf8");
+console.log(
+  `Generated vault bundle with ${notes.length} notes at ${outputPath}`
+);

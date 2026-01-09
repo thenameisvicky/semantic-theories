@@ -1,0 +1,653 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--notion-font-family);
+  }
+}
+
+:root {
+  --bg: #0d1117;
+  --bg-secondary: #161b22;
+  --surface: #21262d;
+  --surface-hover: #2d333b;
+  --text: #c9d1d9;
+  --text-secondary: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --border: #30363d;
+  --border-hover: #484f58;
+  --code-bg: #161b22;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-hover: rgba(0, 0, 0, 0.4);
+
+  --syntax-orange: #ffa657;
+  --syntax-green: #7ee787;
+  --syntax-purple: #d2a8ff;
+
+  --error: #ff7b72;
+  --warning: #ffa657;
+
+  --notion-bg: var(--bg);
+  --notion-bg-secondary: var(--bg-secondary);
+  --notion-text: var(--text);
+  --notion-text-secondary: var(--text-secondary);
+  --notion-text-tertiary: var(--text-secondary);
+  --notion-border: var(--border);
+  --notion-border-hover: var(--border-hover);
+  --notion-accent: var(--accent);
+  --notion-accent-hover: var(--accent-hover);
+  --notion-shadow: var(--shadow);
+  --notion-shadow-hover: var(--shadow-hover);
+
+  --notion-font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  --notion-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+
+  --notion-spacing-xs: 2px;
+  --notion-spacing-sm: 4px;
+  --notion-spacing-md: 8px;
+  --notion-spacing-lg: 12px;
+  --notion-spacing-xl: 16px;
+  --notion-spacing-2xl: 24px;
+  --notion-spacing-3xl: 32px;
+  --notion-spacing-4xl: 40px;
+
+  --notion-radius-sm: 3px;
+  --notion-radius-md: 6px;
+  --notion-radius-lg: 8px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--notion-font-family);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.notion-content {
+  color: var(--text) !important;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: none;
+}
+
+.notion-content h1 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 4px;
+  color: var(--text) !important;
+}
+
+.notion-content h2 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 1px;
+  color: var(--text) !important;
+}
+
+.notion-content h3 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 1px;
+  color: var(--text) !important;
+}
+
+.notion-content h4 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 1px;
+  color: var(--text) !important;
+}
+
+.notion-content p {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  color: var(--text) !important;
+}
+
+.notion-content strong {
+  font-weight: 600;
+  color: var(--text) !important;
+}
+
+.notion-content em {
+  font-style: italic;
+  color: var(--text) !important;
+}
+
+.notion-content ul,
+.notion-content ol {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  padding-left: 1.5em;
+}
+
+.notion-content li {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  color: var(--text) !important;
+}
+
+.notion-content ul li {
+  list-style-type: disc;
+}
+
+.notion-content ol li {
+  list-style-type: decimal;
+}
+
+.notion-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
+.notion-content th,
+.notion-content td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+  color: var(--text) !important;
+}
+
+.notion-content th {
+  background-color: var(--bg-secondary);
+  font-weight: 600;
+}
+
+.notion-content code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 85%;
+  background-color: var(--code-bg);
+  padding: 2px 4px;
+  border-radius: 3px;
+  color: var(--text) !important;
+}
+
+.notion-content pre {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 14px;
+  background-color: var(--code-bg);
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  border: 1px solid var(--border);
+}
+
+.notion-content pre code {
+  background: none;
+  padding: 0;
+}
+
+.notion-content * {
+  color: var(--text) !important;
+}
+
+.notion-content h1,
+.notion-content h2,
+.notion-content h3,
+.notion-content h4,
+.notion-content h5,
+.notion-content h6 {
+  color: var(--text) !important;
+}
+
+.notion-content p,
+.notion-content div,
+.notion-content span {
+  color: var(--text) !important;
+}
+
+.notion-content a {
+  color: var(--accent) !important;
+  text-decoration: underline;
+}
+
+.notion-content a:hover {
+  color: var(--accent-hover) !important;
+}
+
+.collapsible-markdown {
+  width: 100%;
+  text-align: left;
+}
+
+.collapsible-markdown * {
+  text-align: left;
+}
+
+.collapsible-section {
+  margin: 0;
+}
+
+.collapsible-heading-wrapper {
+  position: relative;
+  transition: background-color 0.1s ease;
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.collapsible-heading-wrapper:hover {
+  background-color: var(--surface-hover);
+  border-radius: 3px;
+}
+
+.collapsible-heading-wrapper:hover .collapsible-toggle {
+  opacity: 1;
+}
+
+.collapsible-toggle {
+  opacity: 0.6;
+  transition: opacity 0.1s ease, transform 0.2s ease;
+}
+
+.collapsible-heading-wrapper:hover .collapsible-toggle {
+  opacity: 1;
+}
+
+.collapsible-content {
+  overflow: hidden;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.collapsible-content .markdown-content-block {
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
+.collapsible-content .markdown-content-block p {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  color: var(--text) !important;
+}
+
+.collapsible-content .markdown-content-block ul,
+.collapsible-content .markdown-content-block ol {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  padding-left: 1.5em;
+}
+
+.collapsible-content .markdown-content-block li {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  color: var(--text) !important;
+}
+
+.collapsible-content .markdown-content-block code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 85%;
+  background-color: var(--code-bg);
+  padding: 2px 4px;
+  border-radius: 3px;
+  color: var(--text) !important;
+}
+
+.collapsible-content .markdown-content-block pre {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 14px;
+  background-color: var(--code-bg);
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  border: 1px solid var(--border);
+}
+
+.collapsible-content .markdown-content-block pre code {
+  background: none;
+  padding: 0;
+}
+
+/* GitHub-like markdown styles */
+.markdown-content-block,
+.collapsible-content .markdown-content-block {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  color: var(--text);
+  text-align: left;
+  width: 100%;
+  max-width: 100%;
+}
+
+.markdown-content-block h1,
+.collapsible-content .markdown-content-block h1 {
+  font-size: 2em;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  text-align: left;
+}
+
+.markdown-content-block h2,
+.collapsible-content .markdown-content-block h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  text-align: left;
+}
+
+.markdown-content-block h3,
+.collapsible-content .markdown-content-block h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  color: var(--text);
+  text-align: left;
+}
+
+.markdown-content-block h4,
+.collapsible-content .markdown-content-block h4 {
+  font-size: 1em;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  color: var(--text);
+  text-align: left;
+}
+
+.markdown-content-block p,
+.collapsible-content .markdown-content-block p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: var(--text);
+  text-align: left;
+}
+
+.markdown-content-block ul,
+.markdown-content-block ol,
+.collapsible-content .markdown-content-block ul,
+.collapsible-content .markdown-content-block ol {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding-left: 2em;
+  text-align: left;
+}
+
+.markdown-content-block li,
+.collapsible-content .markdown-content-block li {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  color: var(--text);
+  text-align: left;
+}
+
+.markdown-content-block code,
+.collapsible-content .markdown-content-block code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 85%;
+  background-color: var(--code-bg);
+  padding: 0.2em 0.4em;
+  border-radius: 6px;
+  color: var(--text);
+}
+
+.markdown-content-block pre,
+.collapsible-content .markdown-content-block pre {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: var(--code-bg);
+  border-radius: 6px;
+  padding: 16px;
+  overflow: auto;
+  margin-top: 0;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+}
+
+.markdown-content-block pre code,
+.collapsible-content .markdown-content-block pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+  color: var(--text);
+}
+
+.markdown-content-block blockquote,
+.collapsible-content .markdown-content-block blockquote {
+  padding: 0 1em;
+  color: var(--text-secondary);
+  border-left: 0.25em solid var(--border);
+  margin: 0 0 16px 0;
+}
+
+.markdown-content-block table,
+.collapsible-content .markdown-content-block table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+  margin-top: 0;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.markdown-content-block table th,
+.markdown-content-block table td,
+.collapsible-content .markdown-content-block table th,
+.collapsible-content .markdown-content-block table td {
+  padding: 6px 13px;
+  border: 1px solid var(--border);
+}
+
+.markdown-content-block table th,
+.collapsible-content .markdown-content-block table th {
+  font-weight: 600;
+  background-color: var(--bg-secondary);
+}
+
+.markdown-content-block table tr,
+.collapsible-content .markdown-content-block table tr {
+  background-color: var(--bg);
+  border-top: 1px solid var(--border);
+}
+
+.markdown-content-block table tr:nth-child(2n),
+.collapsible-content .markdown-content-block table tr:nth-child(2n) {
+  background-color: var(--bg-secondary);
+}
+
+.markdown-content-block a,
+.collapsible-content .markdown-content-block a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.markdown-content-block a:hover,
+.collapsible-content .markdown-content-block a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+.markdown-content-block hr,
+.collapsible-content .markdown-content-block hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: var(--border);
+  border: 0;
+}
+
+.markdown-content-block img,
+.collapsible-content .markdown-content-block img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: var(--bg);
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-content-block strong,
+.collapsible-content .markdown-content-block strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.markdown-content-block em,
+.collapsible-content .markdown-content-block em {
+  font-style: italic;
+  color: var(--text);
+}
+
+
+.kural-text {
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.kural-default {
+  position: relative;
+  padding: 4px 12px 4px 12px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  color: var(--bg);
+}
+
+@keyframes kuralBump {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.kural-bump {
+  animation: kuralBump 0.3s ease;
+}
+
+/* Utility classes for common patterns */
+.bg-secondary {
+  background-color: var(--bg-secondary);
+}
+
+.border {
+  border-color: var(--border);
+}
+
+.text-primary {
+  color: var(--text);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.bg-surface {
+  background-color: var(--surface);
+}
+
+.bg-surface-hover:hover {
+  background-color: var(--surface-hover);
+}
+
+.border-hover:hover {
+  border-color: var(--border-hover);
+}
+
+.shadow-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-card-hover:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.shadow-modal {
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
+}
+
+.shadow-toast {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-tooltip {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.bg-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.bg-surface-hover-transition {
+  transition: background-color 0.1s ease;
+}
+
+.border-hover-transition {
+  transition: border-color 0.1s ease;
+}
+
+.shadow-transition {
+  transition: box-shadow 0.1s ease;
+}
+
+@keyframes scroll-right-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-right-left {
+  animation: scroll-right-left 80s linear infinite;
+}

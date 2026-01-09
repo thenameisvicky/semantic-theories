@@ -3,11 +3,6 @@ name: Production
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: "Branch to deploy"
-        required: true
-        type: string
-        default: "master"
       email:
         description: "Enter deployment email"
         required: true
@@ -26,21 +21,6 @@ jobs:
       pull-requests: read
 
     steps:
-      - name: Validate branch input
-        run: |
-          BRANCH="${{ github.event.inputs.branch }}"
-          if [ -z "$BRANCH" ]; then
-            echo "Branch name cannot be empty"
-            exit 1
-          fi
-          echo "Branch to deploy: $BRANCH"
-
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.branch }}
-          fetch-depth: 0
-
       - name: Verify email from input
         id: verify-email
         run: |
@@ -75,7 +55,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.branch }}
+          ref: ${{ github.ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -120,7 +100,7 @@ jobs:
         run: |
           echo "## Deployment Successful" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Branch**: ${{ github.event.inputs.branch }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Deployed by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Deployment URL**: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,169 @@
+
+import { useState, useEffect, useCallback } from "react";
+
+export type ToastItem = {
+  id: string;
+  type: ToastType;
+  message: string;
+  duration?: number;
+};
+
+export type ToastType = "success" | "warning" | "error" | "info";
+
+type ToastProps = {
+  type: ToastType;
+  message: string;
+  duration?: number;
+  onClose: () => void;
+};
+
+function Toast({ type, message, duration = 5000, onClose }: ToastProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+
+  useEffect(() => {
+    const showTimer = setTimeout(() => {
+      setIsVisible(true);
+    }, 50);
+
+    const hideTimer = setTimeout(() => {
+      setIsExiting(true);
+      setTimeout(() => {
+        onClose();
+      }, 500);
+    }, duration);
+
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    };
+  }, [duration, onClose]);
+
+  const getTypeClasses = () => {
+    switch (type) {
+      case "success":
+        return {
+          container: "bg-[rgba(126,231,135,0.15)] border-[var(--syntax-green)]",
+          text: "text-[var(--syntax-green)]"
+        };
+      case "warning":
+        return {
+          container: "bg-[rgba(255,166,87,0.15)] border-[var(--warning)]",
+          text: "text-[var(--warning)]"
+        };
+      case "error":
+        return {
+          container: "bg-[rgba(255,123,114,0.15)] border-[var(--error)]",
+          text: "text-[var(--error)]"
+        };
+      default:
+        return {
+          container: "bg-surface border-[var(--border)]",
+          text: "text-primary"
+        };
+    }
+  };
+
+  const typeClasses = getTypeClasses();
+
+  return (
+    <div
+      className={`px-4 py-3 rounded-lg min-w-[250px] max-w-[400px] transition-all duration-500 ease-out border shadow-toast ${
+        isVisible && !isExiting
+          ? "translate-x-0 opacity-100"
+          : "translate-x-full opacity-0"
+      } ${typeClasses.container}`}
+    >
+      <div className="flex items-center gap-3">
+        <div className="flex-1">
+          <p className={`text-sm font-medium ${typeClasses.text}`}>
+            {message}
+          </p>
+        </div>
+        <button
+          onClick={() => {
+            setIsExiting(true);
+            setTimeout(() => onClose(), 300);
+          }}
+          className="transition-colors text-secondary hover:text-primary"
+          aria-label="Close toast"
+        >
+          <svg
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default function ToastContainer({
+  toasts,
+}: {
+  toasts: ToastItem[];
+}) {
+  const [internalToasts, setInternalToasts] = useState<ToastItem[]>(toasts);
+
+  useEffect(() => {
+    setInternalToasts(toasts);
+  }, [toasts]);
+
+  const removeToast = useCallback((id: string) => {
+    setInternalToasts((prev) => prev.filter((toast) => toast.id !== id));
+  }, []);
+
+  // Separate toasts by type for different positioning
+  const errorToasts = internalToasts.filter((toast) => toast.type === "error");
+  const otherToasts = internalToasts.filter((toast) => toast.type !== "error");
+
+  return (
+    <>
+      {/* Error toasts at 25% height */}
+      {errorToasts.length > 0 && (
+        <div className="fixed right-4 top-[25%] transform -translate-y-1/2 z-[10000] pointer-events-none">
+          <div className="flex flex-col gap-2 items-end">
+            {errorToasts.map((toast) => (
+              <div key={toast.id} className="pointer-events-auto">
+                <Toast
+                  type={toast.type}
+                  message={toast.message}
+                  duration={toast.duration}
+                  onClose={() => removeToast(toast.id)}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      
+      {/* Other toasts at 75% height */}
+      {otherToasts.length > 0 && (
+        <div className="fixed right-4 top-[75%] transform -translate-y-1/2 z-[10000] pointer-events-none">
+          <div className="flex flex-col gap-2 items-end">
+            {otherToasts.map((toast) => (
+              <div key={toast.id} className="pointer-events-auto">
+                <Toast
+                  type={toast.type}
+                  message={toast.message}
+                  duration={toast.duration}
+                  onClose={() => removeToast(toast.id)}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
