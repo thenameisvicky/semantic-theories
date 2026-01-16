@@ -3,6 +3,27 @@ title: Leetcode Patterns
 date: 2025-07-03
 ---
 
+## Phase 0 - Brute force
+
+- **What is Brute force ?**
+  - Not bad code, not inefficient forever, no thinking.
+  - Enumerate all possibilities explicitly, exactly how a dumb but honest machine would.
+  - No shortcuts, internal APIs, explicit loops, manual comparisions, clear memory usage.
+  - Think like this, the code you write will get converted into direct CPU instructions no translations involved in-between.
+- **Gains ?**
+  - You can understand memory usage.
+  - You can understand time cost.
+  - This is how algorithums discovered.
+- **Follow these if you wanna master brute force**
+  - First solution must be excat simulation of paper pen write up.
+  - Then you execute the code, debug understand transformations wirte it down for each iteration or steps.
+  - Reduce function overhead, repeated steps and extra spaces.
+  - Even it is ugly code wirte it you won't regret trust me.
+- **How to write brute force code ?**
+  - No assumptions, no overtime thinking, no optimizations.
+  - Just check every possiblities.
+- **Never skip ths phase, skipping would cost you more**
+
 ## Phase 1 - Mental Models for Pattern Recognition
 
 - **Ask the change + Condition Question**
