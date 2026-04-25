@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
-  base: '/app-mdRunner/', // GitHub Pages base path
+  base: '/semantic-theories/', // GitHub Pages base path
   plugins: [react()],
   resolve: {
     alias: {

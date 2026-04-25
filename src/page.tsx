@@ -3,20 +3,20 @@ import RoadmapView from "./components/RoadmapView";
 import { THIRUKKURAL_TAMIL } from "./constants";
 
 export default function Home() {
-  const [showRoadmap, setShowRoadmap] = useState(false);
+  const [showRoadmap, setShowRoadmap] = useState(true);
 
   if (showRoadmap) {
     return <RoadmapView />;
   }
 
-  const lines = [];
-  for (let i = 0; i < THIRUKKURAL_TAMIL.length; i += 3) {
-    lines.push(THIRUKKURAL_TAMIL.slice(i, i + 3));
-  }
+  // const lines = [];
+  // for (let i = 0; i < THIRUKKURAL_TAMIL.length; i += 3) {
+  //   lines.push(THIRUKKURAL_TAMIL.slice(i, i + 3));
+  // }
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] relative overflow-hidden">
-      {lines.map((lineKurals, lineIndex) => {
+    <div className="min-h bg-[var(--bg)] relative overflow-hidden">
+      {/* {lines.map((lineKurals, lineIndex) => {
         const rowHeight = 30;
         const rowGap = 70;
         const topPosition = lineIndex * (rowHeight + rowGap);
@@ -49,11 +49,11 @@ export default function Home() {
             </div>
           </div>
         );
-      })}
+      })} */}
 
       <div className="relative z-20 flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-7xl font-extrabold italic text-[var(--text)] mb-8 tracking-wide">
-          Arka Vault
+          broke'NHungry
         </h1>
         <button
           onClick={() => setShowRoadmap(true)}
