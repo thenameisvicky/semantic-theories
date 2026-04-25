@@ -26,7 +26,7 @@ type GraphViewProps = {
   height?: number;
 };
 
-export default function GraphView({ notes, onNodeClick, height: initialHeight = 500 }: GraphViewProps) {
+export default function GraphView({ notes, onNodeClick, height: initialHeight = 400 }: GraphViewProps) {
   const fgRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 800, height: initialHeight });
@@ -102,7 +102,6 @@ export default function GraphView({ notes, onNodeClick, height: initialHeight = 
     <div 
       ref={containerRef}
       className="w-full h-full bg-[var(--bg)] border border-[var(--border)] rounded-lg overflow-hidden" 
-      style={{ minHeight: initialHeight }}
     >
       <ForceGraph2D
         ref={fgRef}
