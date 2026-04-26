@@ -31,6 +31,7 @@ export default function GraphView({ notes, onNodeClick, height: initialHeight = 
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 800, height: initialHeight });
   const [colors, setColors] = useState({ accent: "#58a6ff", text: "#8b949e", bg: "#0d1117" });
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   useEffect(() => {
     const style = getComputedStyle(document.body);
@@ -110,24 +111,36 @@ export default function GraphView({ notes, onNodeClick, height: initialHeight = 
         height={dimensions.height}
         backgroundColor={colors.bg}
         nodeColor={() => colors.accent}
-        linkColor={() => "rgba(139, 148, 158, 0.3)"}
-        nodeRelSize={6}
-        linkDirectionalParticles={1}
+        linkColor={() => "rgba(37, 99, 235, 0.15)"}
+        nodeRelSize={7}
+        linkDirectionalParticles={2}
         linkDirectionalParticleSpeed={0.005}
+        onNodeHover={(node) => setHoveredNode(node ? node.id as string : null)}
         nodeCanvasObject={(node: any, ctx, globalScale) => {
+          const isHovered = hoveredNode === node.id;
           const label = node.name;
-          const fontSize = 14 / globalScale;
-          ctx.font = `${fontSize}px Sans-Serif`;
+          const fontSize = (isHovered ? 16 : 14) / globalScale;
+          const radius = isHovered ? 8 : 5;
+          
+          ctx.font = `${isHovered ? 'bold ' : ''}${fontSize}px Sans-Serif`;
           
           ctx.beginPath();
-          ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
+          ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
           ctx.fillStyle = colors.accent;
           ctx.fill();
 
+          // Add a glow effect for hovered node
+          if (isHovered) {
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = colors.accent;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+          }
+
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillStyle = colors.text;
-          ctx.fillText(label, node.x, node.y + (10 / globalScale) + 5);
+          ctx.fillStyle = isHovered ? colors.accent : colors.text;
+          ctx.fillText(label, node.x, node.y + (radius / globalScale) + (10 / globalScale));
         }}
         nodePointerAreaPaint={(node: any, color, ctx) => {
           ctx.fillStyle = color;
@@ -136,6 +149,12 @@ export default function GraphView({ notes, onNodeClick, height: initialHeight = 
           ctx.fill();
         }}
         onNodeClick={(node: any) => {
+          // Zoom to node
+          if (fgRef.current) {
+            fgRef.current.centerAt(node.x, node.y, 1000);
+            fgRef.current.zoom(4, 1000);
+          }
+          
           const note = notes.find((n) => n.slug === node.id);
           if (note) onNodeClick(note);
         }}

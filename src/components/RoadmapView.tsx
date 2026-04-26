@@ -169,18 +169,18 @@ export default function RoadmapView() {
   return (
     <div className="h-screen w-full bg-[var(--bg)] flex flex-col overflow-hidden relative">
       <ToastContainer toasts={toasts} />
-      
+
       {/* Header */}
       <div className="border-b p-4 bg-secondary border flex items-center justify-between z-40">
         <div className="flex items-center gap-4">
-          <button 
+          <button
             className="md:hidden p-2 -ml-2 text-primary hover:bg-[var(--surface-hover)] rounded-lg transition-colors"
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             aria-label="Toggle Sidebar"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
           </button>
-          <button 
+          <button
             onClick={() => {
               setSelectedNoteSlug(null);
               setMarkdownContent("");
@@ -188,7 +188,7 @@ export default function RoadmapView() {
             }}
             className="text-xl font-bold text-primary hover:opacity-70 transition-opacity"
           >
-            broke'NHungry
+            brokeNhungry
           </button>
         </div>
       </div>
@@ -196,7 +196,7 @@ export default function RoadmapView() {
       <div className="flex-1 flex flex-row overflow-hidden relative">
         {/* Sidebar Overlay for Mobile */}
         {isSidebarOpen && (
-          <div 
+          <div
             className="fixed inset-0 bg-black/50 z-20 md:hidden"
             onClick={() => setIsSidebarOpen(false)}
           />
@@ -237,7 +237,7 @@ export default function RoadmapView() {
             <div className="p-2 mb-2 text-secondary text-xs italic opacity-70">
               Interactive Graph View • Click nodes to read
             </div>
-            
+
             <div className={`w-full transition-all duration-300 ${!selectedNoteSlug ? "h-[40vh]" : "h-[300px]"} md:flex-1 md:min-h-[400px] shrink-0`}>
               <GraphView
                 notes={notes}
@@ -248,18 +248,40 @@ export default function RoadmapView() {
 
             {/* Content Area or Empty State */}
             {selectedNoteSlug ? (
-              <div className="mt-6 border border-[var(--border)] rounded-lg p-6 bg-secondary markdown-view-container shadow-inner flex-1 md:flex-none">
-                <div className="max-w-4xl mx-auto">
+              <div className="mt-6 border border-[var(--border)] rounded-lg p-8 bg-secondary markdown-view-container shadow-sm flex-1 md:flex-none relative animate-in fade-in duration-500">
+                <button
+                  onClick={() => {
+                    setSelectedNoteSlug(null);
+                    setMarkdownContent("");
+                  }}
+                  className="absolute top-4 right-4 p-2 text-secondary hover:text-primary hover:bg-[var(--surface-hover)] rounded-full transition-all"
+                  title="Close and return to graph"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <div className="max-w-3xl mx-auto">
                   {isLoading ? (
                     <div className="text-secondary flex items-center gap-2 text-sm">
                       <div className="animate-spin h-3 w-3 border-2 border-[var(--accent)] border-t-transparent rounded-full"></div>
                       Loading content...
                     </div>
                   ) : (
-                    <div
-                      className="markdown-content-block notion-content"
-                      dangerouslySetInnerHTML={{ __html: markdownContent }}
-                    />
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                      <header className="mb-8 border-b pb-8 border-[var(--border)]">
+                        <h1 className="text-4xl font-extrabold text-[var(--text)] mb-2 tracking-tight">
+                          {notes.find(n => n.slug === selectedNoteSlug)?.frontmatter.title || selectedNoteSlug}
+                        </h1>
+                        <div className="text-sm text-secondary flex items-center gap-2">
+                          <span>{notes.find(n => n.slug === selectedNoteSlug)?.frontmatter.date}</span>
+                          <span className="w-1 h-1 bg-[var(--border)] rounded-full"></span>
+                          <span className="opacity-70">Blog Post</span>
+                        </div>
+                      </header>
+                      <div
+                        className="markdown-content-block notion-content"
+                        dangerouslySetInnerHTML={{ __html: markdownContent }}
+                      />
+                    </div>
                   )}
                 </div>
               </div>

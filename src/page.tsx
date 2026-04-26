@@ -53,7 +53,7 @@ export default function Home() {
 
       <div className="relative z-20 flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-7xl font-extrabold italic text-[var(--text)] mb-8 tracking-wide">
-          broke'NHungry
+          brokeNhungry
         </h1>
         <button
           onClick={() => setShowRoadmap(true)}
