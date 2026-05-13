@@ -330,6 +330,7 @@ Think like this
 
    1. Deep dive in to V8 internals - **v8 Internals** card.
    2. How modern framework works with Chromium browser - **React Internals** card.
-   3. Inter Process Communication system - **Inter Process communication System** card.
+   3. Telementries, TLS leaving the browser - **Know your browser** card.
+   4. Inter Process Communication system - **Inter Process communication System** card.
 
 > This makes you a better engineer — one that AI can’t easily replace.
